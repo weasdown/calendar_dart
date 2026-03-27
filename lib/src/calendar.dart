@@ -31,43 +31,52 @@ class Calendar {
     }
   }
 
-  iterMonthDays() {
+  Iterable<DateTime> iterMonthDays(int year, int month) sync* {
     throw UnimplementedError();
   }
 
-  iterMonthDays2() {
+  Iterable<DateTime> iterMonthDays2(int year, int month) sync* {
     throw UnimplementedError();
   }
 
-  iterMonthDays3() {
+  Iterable<(int y, int m, int d)> iterMonthDays3(int year, int month) sync* {
     throw UnimplementedError();
   }
 
-  iterMonthDays4() {
+  Iterable<(int y, int m, int d, int dow)> iterMonthDays4(
+    int year,
+    int month,
+  ) sync* {
     throw UnimplementedError();
   }
 
-  monthDatesCalendar() {
+  List<List<(int, int)>> monthDatesCalendar(int year, int month) {
     throw UnimplementedError();
   }
 
-  monthDays2Calendar() {
+  List<List<(int d, int weekday)>> monthDays2Calendar(int year, int month) {
     throw UnimplementedError();
   }
 
-  monthDaysCalendar() {
+  List<List<int>> monthDaysCalendar(int year, int month) {
     throw UnimplementedError();
   }
 
-  yearDatesCalendar() {
+  List<List<List<List<DateTime>>>> yearDatesCalendar(
+    int year, [
+    int width = 3,
+  ]) {
     throw UnimplementedError();
   }
 
-  yearDays2Calendar() {
+  List<List<List<List<(int d, int weekday)>>>> yearDays2Calendar(
+    int year, [
+    int width = 3,
+  ]) {
     throw UnimplementedError();
   }
 
-  yearDaysCalendar() {
+  List<List<List<List<int>>>> yearDaysCalendar(int year, [int width = 3]) {
     throw UnimplementedError();
   }
 }
