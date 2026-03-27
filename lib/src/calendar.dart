@@ -36,7 +36,25 @@ enum Month {
   int get value => index + 1;
 }
 
-enum Day { monday, tuesday, wednesday, thursday, friday, saturday, sunday }
+enum Day {
+  monday,
+  tuesday,
+  wednesday,
+  thursday,
+  friday,
+  saturday,
+  sunday;
+
+  int operator +(int value) => (index + value) % 7;
+
+  int operator -(int value) => (index - value) % 7;
+}
+
+extension IntDay on int {
+  int operator -(Day day) => (this - day.index) % 7;
+
+  int operator +(Day day) => (this + day.index) % 7;
+}
 
 DateTime date(int year, int month, int day) => DateTime(year, month, day);
 
