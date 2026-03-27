@@ -22,8 +22,13 @@ class Calendar {
     }
   }
 
-  iterMonthDates() {
-    throw UnimplementedError();
+  /// Return an iterator for one month.
+  ///
+  /// The iterator will yield datetime.date values and will always iterate through complete weeks, so it will yield dates outside the specified month.
+  Iterable<DateTime> iterMonthDates(int year, int month) sync* {
+    for (final (int y, int m, int d) in iterMonthDays3(year, month)) {
+      yield DateTime(y, m, d);
+    }
   }
 
   iterMonthDays() {
