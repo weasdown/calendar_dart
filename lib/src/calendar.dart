@@ -15,6 +15,25 @@ class IllegalMonthError implements Exception {
   String toString() => 'bad month number $month; must be 1-12';
 }
 
+enum Month {
+  january,
+  february,
+  march,
+  april,
+  may,
+  june,
+  july,
+  august,
+  september,
+  october,
+  november,
+  december;
+
+  const Month();
+
+  int get value => index + 1;
+}
+
 enum Day { monday, tuesday, wednesday, thursday, friday, saturday, sunday }
 
 /// Number of days per month (except for February in leap years)
