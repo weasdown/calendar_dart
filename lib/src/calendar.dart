@@ -1,4 +1,6 @@
-/// Base calendar class. This class doesn't do any formatting. It simply provides data to subclasses.
+/// Base calendar class.
+///
+/// This class doesn't do any formatting. It simply provides data to subclasses.
 class Calendar {
   Calendar({this.firstWeekDay = 0});
 
@@ -31,18 +33,30 @@ class Calendar {
     }
   }
 
+  /// Like [iterMonthDates()], but will yield day numbers.
+  ///
+  /// For days outside the specified month the day number is 0.
   Iterable<DateTime> iterMonthDays(int year, int month) sync* {
     throw UnimplementedError();
   }
 
+  /// Like [iterMonthDates()], but will yield `(day number, weekday number)` records.
+  ///
+  /// For days outside the specified month the day number is 0.
   Iterable<DateTime> iterMonthDays2(int year, int month) sync* {
     throw UnimplementedError();
   }
 
+  /// Like [iterMonthDates()], but will yield `(year, month, day)` records.
+  ///
+  /// Can be used for dates outside of datetime.date range.
   Iterable<(int y, int m, int d)> iterMonthDays3(int year, int month) sync* {
     throw UnimplementedError();
   }
 
+  /// Like [iterMonthDates()], but will yield `(year, month, day, day_of_week)` records.
+  ///
+  /// Can be used for dates outside of datetime.date range.
   Iterable<(int y, int m, int d, int dow)> iterMonthDays4(
     int year,
     int month,
@@ -50,18 +64,30 @@ class Calendar {
     throw UnimplementedError();
   }
 
+  /// Return a matrix (list of lists) representing a month's calendar.
+  ///
+  /// Each row represents a week; week entries are datetime.date values.
   List<List<(int, int)>> monthDatesCalendar(int year, int month) {
     throw UnimplementedError();
   }
 
+  /// Return a matrix representing a month's calendar.
+  ///
+  /// Each row represents a week; week entries are `(day number, weekday number)` records. Day numbers outside this month are zero.
   List<List<(int d, int weekday)>> monthDays2Calendar(int year, int month) {
     throw UnimplementedError();
   }
 
+  /// Return a matrix representing a month's calendar.
+  ///
+  /// Each row represents a week; days outside this month are zero.
   List<List<int>> monthDaysCalendar(int year, int month) {
     throw UnimplementedError();
   }
 
+  /// Return the data for the specified year ready for formatting.
+  ///
+  /// The return value is a list of month rows. Each month row contains up to width months. Each month contains between 4 and 6 weeks and each week contains 1-7 days. Days are [DateTime] objects.
   List<List<List<List<DateTime>>>> yearDatesCalendar(
     int year, [
     int width = 3,
@@ -69,6 +95,9 @@ class Calendar {
     throw UnimplementedError();
   }
 
+  /// Return the data for the specified year ready for formatting (similar to [yearDatesCalendar()]).
+  ///
+  /// Entries in the week lists are `(day number, weekday number)` records. Day numbers outside this month are zero.
   List<List<List<List<(int d, int weekday)>>>> yearDays2Calendar(
     int year, [
     int width = 3,
@@ -76,6 +105,9 @@ class Calendar {
     throw UnimplementedError();
   }
 
+  /// Return the data for the specified year ready for formatting (similar to [yearDatesCalendar()]).
+  ///
+  /// Entries in the week lists are day numbers. Day numbers outside this month are zero.
   List<List<List<List<int>>>> yearDaysCalendar(int year, [int width = 3]) {
     throw UnimplementedError();
   }
