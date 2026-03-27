@@ -80,6 +80,9 @@ int _monthLen(int year, int month) =>
 (int y, int m) _prevMonth(int year, int month) =>
     (month == 1) ? (year - 1, 12) : (year, month - 1);
 
+(int y, int m) _nextMonth(int year, int month) =>
+    month == 12 ? (year + 1, 1) : (year, month + 1);
+
 /// Base calendar class.
 ///
 /// This class doesn't do any formatting. It simply provides data to subclasses.
