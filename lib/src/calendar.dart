@@ -38,6 +38,8 @@ enum Month {
 
 enum Day { monday, tuesday, wednesday, thursday, friday, saturday, sunday }
 
+DateTime date(int year, int month, int day) => DateTime(year, month, day);
+
 /// Number of days per month (except for February in leap years)
 const List<int> mDays = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
