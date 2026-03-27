@@ -7,6 +7,12 @@ class IllegalMonthError implements Exception {
   String toString() => 'bad month number $month; must be 1-12';
 }
 
+void _validateMonth(int month) {
+  if (!(month >= 1 && month <= 12)) {
+    throw IllegalMonthError(month);
+  }
+}
+
 /// Base calendar class.
 ///
 /// This class doesn't do any formatting. It simply provides data to subclasses.
