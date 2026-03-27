@@ -15,8 +15,11 @@ class Calendar {
     this.firstWeekDay = firstWeekDay;
   }
 
-  iterWeekDays() {
-    throw UnimplementedError();
+  /// Return an iterator for one week of weekday numbers starting with the configured first one.
+  Iterable<int> iterWeekDays() sync* {
+    for (int i = firstWeekDay; i < firstWeekDay + 7; i++) {
+      yield i % 7;
+    }
   }
 
   iterMonthDates() {
