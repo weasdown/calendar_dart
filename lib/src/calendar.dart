@@ -168,12 +168,13 @@ class Calendar {
     yield* repeat(0, daysAfter);
   }
 
-  // TODO implement method
   /// Like [iterMonthDates()], but will yield `(day number, weekday number)` records.
   ///
   /// For days outside the specified month the day number is 0.
   Iterable<(int d, int weekday)> iterMonthDays2(int year, int month) sync* {
-    throw UnimplementedError();
+    for (final (int index, int d) in iterMonthDays(year, month).indexed) {
+      yield (d, (index + firstWeekDay) % 7);
+    }
   }
 
   /// Like [iterMonthDates()], but will yield `(year, month, day)` records.
