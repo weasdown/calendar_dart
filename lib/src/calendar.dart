@@ -23,6 +23,19 @@ void _validateMonth(int month) {
   }
 }
 
+/// Return weekday (0-6 ~ Mon-Sun) for [year] (0-9999), [month] (1-12), [day] (1-31).
+Day weekday(int year, int month, int day) {
+  // Equivalents to Python's datetime.MINYEAR and datetime.MAXYEAR.
+  int minYear = 1;
+  int maxYear = 9999;
+
+  if (!(year >= minYear && year <= maxYear)) {
+    year = 2000 + year % 400;
+  }
+
+  return Day.values[DateTime(year, month, day).weekday - 1];
+}
+
 /// Base calendar class.
 ///
 /// This class doesn't do any formatting. It simply provides data to subclasses.
