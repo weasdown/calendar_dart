@@ -61,6 +61,19 @@ Day weekday(int year, int month, int day) {
   return Day.values[DateTime(year, month, day).weekday - 1];
 }
 
+/// Return weekday of first day of month (0-6 ~ Mon-Sun) and number of days (28-31) for [year], [month].
+(Day day1, int nDays) monthRange(int year, int month) {
+  _validateMonth(month);
+  Day day1 = weekday(year, month, 1);
+
+  int boolToInt(bool a) => a ? 1 : 0;
+
+  int nDays =
+      mDays[month] + boolToInt(month == Month.february.value && isLeap(year));
+
+  return (day1, nDays);
+}
+
 /// Base calendar class.
 ///
 /// This class doesn't do any formatting. It simply provides data to subclasses.
