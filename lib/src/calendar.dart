@@ -248,12 +248,20 @@ class Calendar {
     return range.map((int i) => days.sublist(i, i + 7)).toList();
   }
 
-  // TODO implement method
   /// Return a matrix representing a month's calendar.
   ///
   /// Each row represents a week; days outside this month are zero.
   List<List<int>> monthDaysCalendar(int year, int month) {
-    throw UnimplementedError();
+    final List<int> days = iterMonthDays(year, month).toList();
+
+    // Equivalent to Python's `range(0, len(days), 7)`.
+    final List<int> range = List<int>.generate(
+      (days.length / 7).toInt(),
+      (i) => 7 * i,
+      growable: false,
+    );
+
+    return range.map((int i) => days.sublist(i, i + 7)).toList();
   }
 
   // TODO implement method
