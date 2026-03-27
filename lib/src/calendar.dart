@@ -170,8 +170,8 @@ class Calendar {
   /// Can be used for dates outside of datetime.date range.
   Iterable<(int y, int m, int d)> iterMonthDays3(int year, int month) sync* {
     final (Day day1, int nDays) = monthRange(year, month);
-    final int daysBefore = (day1.index - firstWeekDay) % 7;
-    final int daysAfter = (firstWeekDay - day1.index - nDays) % 7;
+    final int daysBefore = (day1 - firstWeekDay) % 7;
+    final int daysAfter = (IntDay(firstWeekDay) - day1 - nDays) % 7;
     var (int y, int m) = _prevMonth(year, month);
     final int end = _monthLen(y, m) + 1;
 
