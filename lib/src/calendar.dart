@@ -15,6 +15,8 @@ class IllegalMonthError implements Exception {
   String toString() => 'bad month number $month; must be 1-12';
 }
 
+enum Day { monday, tuesday, wednesday, thursday, friday, saturday, sunday }
+
 void _validateMonth(int month) {
   if (!(month >= 1 && month <= 12)) {
     throw IllegalMonthError(month);
