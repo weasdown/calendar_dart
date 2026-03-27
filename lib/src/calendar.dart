@@ -5,9 +5,13 @@ class Calendar {
   /// 0 = Monday, 6 = Sunday
   int firstWeekDay;
 
-  int getFirstWeekDay() => firstWeekDay % 7;
+  int get getFirstWeekDay => firstWeekDay % 7;
 
-  void setfirstweekday(int firstWeekDay) {
+  set setFirstWeekDay(int firstWeekDay) {
+    assert(
+      firstWeekDay >= 0 && firstWeekDay < 7,
+      'firstWeekDay must be an integer between 0 and 6 inclusive.',
+    );
     this.firstWeekDay = firstWeekDay;
   }
 
