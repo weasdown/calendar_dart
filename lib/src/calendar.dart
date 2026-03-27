@@ -216,12 +216,20 @@ class Calendar {
     }
   }
 
-  // TODO implement method
   /// Return a matrix (list of lists) representing a month's calendar.
   ///
   /// Each row represents a week; week entries are datetime.date values.
-  List<List<(int, int)>> monthDatesCalendar(int year, int month) {
-    throw UnimplementedError();
+  List<List<DateTime>> monthDatesCalendar(int year, int month) {
+    final List<DateTime> dates = iterMonthDates(year, month).toList();
+
+    // Equivalent to Python's `range(0, len(dates), 7)`.
+    final List<int> range = List<int>.generate(
+      (dates.length / 7).toInt(),
+      (i) => 7 * i,
+      growable: false,
+    );
+
+    return range.map((int i) => dates.sublist(i, i + 7)).toList();
   }
 
   // TODO implement method
