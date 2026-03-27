@@ -74,6 +74,9 @@ void _validateMonth(int month) {
   return (day1, nDays);
 }
 
+int _monthLen(int year, int month) =>
+    mDays[month] + _boolToInt(month == Month.february.value && isLeap(year));
+
 (int y, int m) _prevMonth(int year, int month) =>
     (month == 1) ? (year - 1, 12) : (year, month - 1);
 
