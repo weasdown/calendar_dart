@@ -39,12 +39,6 @@ enum Day { monday, tuesday, wednesday, thursday, friday, saturday, sunday }
 /// Number of days per month (except for February in leap years)
 const List<int> mDays = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
-void _validateMonth(int month) {
-  if (!(month >= 1 && month <= 12)) {
-    throw IllegalMonthError(month);
-  }
-}
-
 /// Return [True] for leap years, [False] for non-leap years.
 bool isLeap(int year) => year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
 
@@ -59,6 +53,12 @@ Day weekday(int year, int month, int day) {
   }
 
   return Day.values[DateTime(year, month, day).weekday - 1];
+}
+
+void _validateMonth(int month) {
+  if (!(month >= 1 && month <= 12)) {
+    throw IllegalMonthError(month);
+  }
 }
 
 /// Return weekday of first day of month (0-6 ~ Mon-Sun) and number of days (28-31) for [year], [month].
