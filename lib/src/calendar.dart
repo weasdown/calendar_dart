@@ -6,6 +6,8 @@
 /// set the first day of the week (0=Monday, 6=Sunday).
 library;
 
+int _boolToInt(bool a) => a ? 1 : 0;
+
 class IllegalMonthError implements Exception {
   IllegalMonthError(this.month);
 
@@ -66,10 +68,8 @@ void _validateMonth(int month) {
   _validateMonth(month);
   Day day1 = weekday(year, month, 1);
 
-  int boolToInt(bool a) => a ? 1 : 0;
-
   int nDays =
-      mDays[month] + boolToInt(month == Month.february.value && isLeap(year));
+      mDays[month] + _boolToInt(month == Month.february.value && isLeap(year));
 
   return (day1, nDays);
 }
