@@ -26,6 +26,9 @@ void _validateMonth(int month) {
   }
 }
 
+/// Return [True] for leap years, [False] for non-leap years.
+bool isLeap(int year) => year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
+
 /// Return weekday (0-6 ~ Mon-Sun) for [year] (0-9999), [month] (1-12), [day] (1-31).
 Day weekday(int year, int month, int day) {
   // Equivalents to Python's datetime.MINYEAR and datetime.MAXYEAR.
