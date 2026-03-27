@@ -149,12 +149,23 @@ class Calendar {
     }
   }
 
-  // TODO implement method
   /// Like [iterMonthDates()], but will yield day numbers.
   ///
   /// For days outside the specified month the day number is 0.
   Iterable<int> iterMonthDays(int year, int month) sync* {
-    throw UnimplementedError();
+    final (Day day1, int nDays) = monthRange(year, month);
+    final int daysBefore = (day1 - firstWeekDay) % 7;
+
+    // Equivalent to Python's `yield from repeat(0, days_before)`.
+    yield* repeat(0, daysBefore);
+
+    // Equivalent to Python's `yield from range(1, ndays + 1)`.
+    yield* List<int>.generate(nDays, (int i) => i + 1, growable: false);
+
+    final int daysAfter = (IntDay(firstWeekDay) - day1 - nDays) % 7;
+
+    // Equivalent to Python's `yield from repeat(0, days_after)`.
+    yield* repeat(0, daysAfter);
   }
 
   // TODO implement method
