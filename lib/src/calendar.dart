@@ -142,7 +142,7 @@ class Calendar {
   /// Like [iterMonthDates()], but will yield day numbers.
   ///
   /// For days outside the specified month the day number is 0.
-  Iterable<DateTime> iterMonthDays(int year, int month) sync* {
+  Iterable<int> iterMonthDays(int year, int month) sync* {
     throw UnimplementedError();
   }
 
