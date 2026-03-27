@@ -17,6 +17,9 @@ class IllegalMonthError implements Exception {
 
 enum Day { monday, tuesday, wednesday, thursday, friday, saturday, sunday }
 
+/// Number of days per month (except for February in leap years)
+const List<int> mDays = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
 void _validateMonth(int month) {
   if (!(month >= 1 && month <= 12)) {
     throw IllegalMonthError(month);
