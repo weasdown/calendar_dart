@@ -136,7 +136,24 @@ class Calendar {
   ///
   /// Can be used for dates outside of datetime.date range.
   Iterable<(int y, int m, int d)> iterMonthDays3(int year, int month) sync* {
-    throw UnimplementedError();
+    final (Day day1, int nDays) = monthRange(year, month);
+    final int daysBefore = (day1.index - firstWeekDay) % 7;
+    final int daysAfter = (firstWeekDay - day1.index - nDays) % 7;
+    var (int y, int m) = _prevMonth(year, month);
+    final int end = _monthLen(y, m) + 1;
+
+    for (int d = end - daysBefore; d < end; d++) {
+      yield (y, m, d);
+    }
+
+    for (int d = 1; d < nDays + 1; d++) {
+      yield (year, month, d);
+    }
+
+    (y, m) = _nextMonth(year, month);
+    for (int d = 1; d < daysAfter + 1; d++) {
+      yield (y, m, d);
+    }
   }
 
   /// Like [iterMonthDates()], but will yield `(year, month, day, day_of_week)` records.
