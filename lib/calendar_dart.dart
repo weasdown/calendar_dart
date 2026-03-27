@@ -3,6 +3,6 @@
 /// More dartdocs go here.
 library;
 
-export 'src/calendar_dart_base.dart';
+export 'src/calendar.dart';
 
 // TODO: Export any libraries intended for clients of this package.
