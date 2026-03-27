@@ -1,3 +1,12 @@
+class IllegalMonthError implements Exception {
+  IllegalMonthError(this.month);
+
+  final int month;
+
+  @override
+  String toString() => 'bad month number $month; must be 1-12';
+}
+
 /// Base calendar class.
 ///
 /// This class doesn't do any formatting. It simply provides data to subclasses.
