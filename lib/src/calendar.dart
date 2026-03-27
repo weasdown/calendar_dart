@@ -272,7 +272,29 @@ class Calendar {
     int year, [
     int width = 3,
   ]) {
-    throw UnimplementedError();
+    // throw UnimplementedError();
+
+    // months = [self.monthdatescalendar(year, m) for m in Month]
+    // return [months[i:i+width] for i in range(0, len(months), width) ]
+
+    final List<List<List<DateTime>>> months = List<List<List<DateTime>>>.from(
+      Month.values.map(
+        (Month m) =>
+            List<List<DateTime>>.from(monthDatesCalendar(year, m.value)),
+      ),
+    );
+
+    // // Equivalent to Python's `range(0, len(days), 7)`.
+    // final List<int> range = List<int>.generate(
+    //   (months.length / 7).toInt(),
+    //   (i) => 7 * i,
+    //   growable: false,
+    // );
+
+    // FIXME make equivalent to Python's `range(0, len(months), width)`
+    final List<int> range = [];
+
+    return range.map((int i) => months.sublist(i, i + 7)).toList();
   }
 
   // TODO implement method
