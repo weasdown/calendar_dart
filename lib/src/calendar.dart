@@ -8,6 +8,17 @@ library;
 
 int _boolToInt(bool a) => a ? 1 : 0;
 
+/// Repeats [value] [n] times.
+///
+/// Approximately equivalent to Python's [`itertools.repeat()`], but with a mandatory [times] argument.
+///
+/// [`itertools.repeat()`]: https://docs.python.org/3/library/itertools.html#itertools.repeat
+Iterable<T> repeat<T extends Object>(T value, int times) sync* {
+  for (int i = 0; i < times; i++) {
+    yield value;
+  }
+}
+
 class IllegalMonthError implements Exception {
   IllegalMonthError(this.month);
 
