@@ -201,7 +201,6 @@ class Calendar {
     }
   }
 
-  // TODO implement method
   /// Like [iterMonthDates()], but will yield `(year, month, day, day_of_week)` records.
   ///
   /// Can be used for dates outside of datetime.date range.
@@ -209,7 +208,12 @@ class Calendar {
     int year,
     int month,
   ) sync* {
-    throw UnimplementedError();
+    for (final (int index, (int y, int m, int d)) in iterMonthDays3(
+      year,
+      month,
+    ).indexed) {
+      yield (y, m, d, (firstWeekDay + index) % 7);
+    }
   }
 
   // TODO implement method
