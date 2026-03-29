@@ -12,12 +12,50 @@ import 'package:intl/intl.dart';
 int _boolToInt(bool a) => a ? 1 : 0;
 
 extension CenterString on String {
-  // TODO implement String extension method
   /// Equivalent of Python's built-in `center()` function.
   ///
   /// Return centered in a string of length [width]. Padding is done using the specified [fillChar] (default is an ASCII space). The original string is returned if width is less than or equal to `this.length`.
   String center(int width, [String fillChar = ' ']) {
-    throw UnimplementedError();
+    if (width <= length) {
+      return this;
+    }
+    // width > this.length
+    else {
+      // Add extra copies of fillChar to the start and end of this string, to make the total length equal width.
+
+      final extra = width - length; // Number of characters to add.
+      final int halfExtra = (extra / 2).toInt();
+
+      String result;
+      // If extra is even, there will be an equal number of fillChars at the start and end of the result.
+      if (extra.isEven) {
+        result = [
+          ...repeat(fillChar, halfExtra),
+          this,
+          ...repeat(fillChar, halfExtra),
+        ].join('');
+      }
+      // extra is odd, so there will be more fillChars at one end of the result than the other.
+      // If length is also odd, the extra fillChar goes at the end. If not, it goes at the start.
+      else {
+        if (length.isOdd) {
+          result = [
+            ...repeat(fillChar, halfExtra),
+            this,
+            ...repeat(fillChar, halfExtra + 1),
+          ].join('');
+        } else {
+          result = [
+            ...repeat(fillChar, halfExtra + 1),
+            this,
+            ...repeat(fillChar, halfExtra),
+          ].join('');
+        }
+      }
+
+      assert(result.length == width);
+      return result;
+    }
   }
 }
 
