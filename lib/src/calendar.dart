@@ -365,11 +365,11 @@ final class TextCalendar extends Calendar {
     return s.center(width);
   }
 
-  // TODO implement method
   /// Returns a single week in a string (no newline).
-  String formatWeek(List<(int, int)> theWeek, int width) {
-    throw UnimplementedError();
-  }
+  String formatWeek(List<(int, int)> theWeek, int width) => theWeek
+      .map((final (int d, int wd) dWd) => formatDay(dWd.$1, dWd.$2, width))
+      .toList()
+      .join('');
 
   // TODO implement method
   /// Returns a formatted week day name.
