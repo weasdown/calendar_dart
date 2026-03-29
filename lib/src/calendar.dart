@@ -19,7 +19,7 @@ extension CenterString on String {
 }
 
 /// Equivalent of Python's [`range()`](https://docs.python.org/3/library/stdtypes.html#range).
-Iterable<int> _range(int start, int stop, [int step = 1]) sync* {
+Iterable<int> _range(int stop, [int start = 0, int step = 1]) sync* {
   for (int i = start; i < stop; i += step) {
     yield i;
   }
