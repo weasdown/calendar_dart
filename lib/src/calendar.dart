@@ -453,7 +453,7 @@ final class TextCalendar extends Calendar {
   String formatWeek(List<(int, int)> theWeek, int width) => theWeek
       .map((final (int d, int wd) dWd) => formatDay(dWd.$1, dWd.$2, width))
       .toList()
-      .join('');
+      .join(' ');
 
   // TODO implement method
   /// Returns a formatted week day name.
