@@ -9,7 +9,7 @@ library;
 int _boolToInt(bool a) => a ? 1 : 0;
 
 /// Equivalent of Python's [`range()`](https://docs.python.org/3/library/stdtypes.html#range).
-Iterable<int> range(int start, int stop, [int step = 1]) sync* {
+Iterable<int> _range(int start, int stop, [int step = 1]) sync* {
   for (int i = start; i < stop; i += step) {
     yield i;
   }
@@ -285,7 +285,7 @@ base class Calendar {
       ),
     );
 
-    return range(
+    return _range(
       0,
       months.length,
       width,
@@ -307,7 +307,7 @@ base class Calendar {
           ),
         );
 
-    return range(
+    return _range(
       0,
       months.length,
       width,
@@ -324,7 +324,7 @@ base class Calendar {
       ),
     );
 
-    return range(
+    return _range(
       0,
       months.length,
       width,
