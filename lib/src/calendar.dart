@@ -337,32 +337,32 @@ final class TextCalendar extends Calendar {
   TextCalendar();
 
   // TODO implement method
-  prweek(int theWeek, int width) {
+  void prweek(int theWeek, int width) {
     throw UnimplementedError();
   }
 
   // TODO implement method
-  formatday(int day, int weekday, int width) {
+  String formatday(int day, int weekday, int width) {
     throw UnimplementedError();
   }
 
   // TODO implement method
-  formatweek(int theWeek, int width) {
+  String formatweek(int theWeek, int width) {
     throw UnimplementedError();
   }
 
   // TODO implement method
-  formatweekday(int day, int width) {
+  String formatweekday(int day, int width) {
     throw UnimplementedError();
   }
 
   // TODO implement method
-  formatweekheader(int width) {
+  String formatweekheader(int width) {
     throw UnimplementedError();
   }
 
   // TODO implement method
-  formatmonthname(
+  String formatmonthname(
     int theYear,
     int theMonth,
     int width, [
@@ -372,22 +372,22 @@ final class TextCalendar extends Calendar {
   }
 
   // TODO implement method
-  prmonth(int theYear, int theMonth, [int w = 0, int l = 0]) {
+  void prmonth(int theYear, int theMonth, [int w = 0, int l = 0]) {
     throw UnimplementedError();
   }
 
   // TODO implement method
-  formatmonth(int theYear, int theMonth, [int w = 0, int l = 0]) {
+  String formatmonth(int theYear, int theMonth, [int w = 0, int l = 0]) {
     throw UnimplementedError();
   }
 
   // TODO implement method
-  formatyear(int theYear, [w = 2, l = 1, c = 6, int m = 3]) {
+  String formatyear(int theYear, [w = 2, l = 1, c = 6, int m = 3]) {
     throw UnimplementedError();
   }
 
   // TODO implement method
-  pryear(int theYear, [int w = 0, int l = 0, c = 6, int m = 3]) {
+  void pryear(int theYear, [int w = 0, int l = 0, c = 6, int m = 3]) {
     throw UnimplementedError();
   }
 }
