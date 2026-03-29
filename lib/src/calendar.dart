@@ -314,11 +314,20 @@ class Calendar {
     ).map((int i) => months.sublist(i, i + width)).toList();
   }
 
-  // TODO implement method
   /// Return the data for the specified year ready for formatting (similar to [yearDatesCalendar()]).
   ///
   /// Entries in the week lists are day numbers. Day numbers outside this month are zero.
   List<List<List<List<int>>>> yearDaysCalendar(int year, [int width = 3]) {
-    throw UnimplementedError();
+    final List<List<List<int>>> months = List<List<List<int>>>.from(
+      Month.values.map(
+        (Month m) => List<List<int>>.from(monthDaysCalendar(year, m.value)),
+      ),
+    );
+
+    return range(
+      0,
+      months.length,
+      width,
+    ).map((int i) => months.sublist(i, i + width)).toList();
   }
 }
