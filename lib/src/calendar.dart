@@ -161,8 +161,8 @@ class _LocalizedDay {
     }
     // If i is an int, this operator returns a String Function(String).
     else {
-      final String Function(String) funcs = _days[i as int];
-      return funcs(format);
+      final String Function(String) func = _days[i as int];
+      return func(format);
     }
   }
 
