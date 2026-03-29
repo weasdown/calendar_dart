@@ -335,4 +335,59 @@ base class Calendar {
 /// Subclass of [Calendar] that outputs a calendar as a simple plain text similar to the UNIX program `cal`.
 final class TextCalendar extends Calendar {
   TextCalendar();
+
+  // TODO implement method
+  prweek(int theWeek, int width) {
+    throw UnimplementedError();
+  }
+
+  // TODO implement method
+  formatday(int day, int weekday, int width) {
+    throw UnimplementedError();
+  }
+
+  // TODO implement method
+  formatweek(int theWeek, int width) {
+    throw UnimplementedError();
+  }
+
+  // TODO implement method
+  formatweekday(int day, int width) {
+    throw UnimplementedError();
+  }
+
+  // TODO implement method
+  formatweekheader(int width) {
+    throw UnimplementedError();
+  }
+
+  // TODO implement method
+  formatmonthname(
+    int theYear,
+    int theMonth,
+    int width, [
+    bool withYear = true,
+  ]) {
+    throw UnimplementedError();
+  }
+
+  // TODO implement method
+  prmonth(int theYear, int theMonth, [int w = 0, int l = 0]) {
+    throw UnimplementedError();
+  }
+
+  // TODO implement method
+  formatmonth(int theYear, int theMonth, [int w = 0, int l = 0]) {
+    throw UnimplementedError();
+  }
+
+  // TODO implement method
+  formatyear(int theYear, [w = 2, l = 1, c = 6, int m = 3]) {
+    throw UnimplementedError();
+  }
+
+  // TODO implement method
+  pryear(int theYear, [int w = 0, int l = 0, c = 6, int m = 3]) {
+    throw UnimplementedError();
+  }
 }
