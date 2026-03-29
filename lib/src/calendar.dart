@@ -271,7 +271,6 @@ class Calendar {
     return range.map((int i) => days.sublist(i, i + 7)).toList();
   }
 
-  // TODO implement method
   /// Return the data for the specified year ready for formatting.
   ///
   /// The return value is a list of month rows. Each month row contains up to width months. Each month contains between 4 and 6 weeks and each week contains 1-7 days. Days are [DateTime] objects.
@@ -279,11 +278,6 @@ class Calendar {
     int year, [
     int width = 3,
   ]) {
-    // throw UnimplementedError();
-
-    // months = [self.monthdatescalendar(year, m) for m in Month]
-    // return [months[i:i+width] for i in range(0, len(months), width) ]
-
     final List<List<List<DateTime>>> months = List<List<List<DateTime>>>.from(
       Month.values.map(
         (Month m) =>
@@ -291,17 +285,11 @@ class Calendar {
       ),
     );
 
-    // // Equivalent to Python's `range(0, len(days), 7)`.
-    // final List<int> range = List<int>.generate(
-    //   (months.length / 7).toInt(),
-    //   (i) => 7 * i,
-    //   growable: false,
-    // );
-
-    // FIXME make equivalent to Python's `range(0, len(months), width)`
-    final List<int> range = [];
-
-    return range.map((int i) => months.sublist(i, i + 7)).toList();
+    return range(
+      0,
+      months.length,
+      width,
+    ).map((int i) => months.sublist(i, i + width)).toList();
   }
 
   // TODO implement method
