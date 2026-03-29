@@ -145,13 +145,10 @@ class _LocalizedDay {
 
   DateFormat get _formatter => DateFormat(format);
 
-  //January 1, 2001, was a Monday.
-  List<String Function(String)> get _days => _range(7)
-      .map(
-        (int i) =>
-            (String format) => _formatter.format(Date(2001, 1, i + 1)),
-      )
-      .toList();
+  List<String Function(String)> get _days => List.generate(7, (int i) {
+    //January 1, 2001, was a Monday.
+    return (String format) => _formatter.format(Date(2001, 1, i + 1));
+  });
 
   dynamic operator [](Object i) {
     assert(i is int || i is _Slice);
