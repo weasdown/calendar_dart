@@ -331,3 +331,8 @@ base class Calendar {
     ).map((int i) => months.sublist(i, i + width)).toList();
   }
 }
+
+/// Subclass of [Calendar] that outputs a calendar as a simple plain text similar to the UNIX program `cal`.
+final class TextCalendar extends Calendar {
+  TextCalendar();
+}
