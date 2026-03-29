@@ -6,6 +6,9 @@
 /// set the first day of the week (0=Monday, 6=Sunday).
 library;
 
+import 'package:calendar_dart/date.dart';
+import 'package:intl/intl.dart';
+
 int _boolToInt(bool a) => a ? 1 : 0;
 
 extension CenterString on String {
@@ -91,6 +94,37 @@ const List<int> mDays = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
 /// Equivalent to Python's `slice`.
 typedef _Slice = (int start, int stop);
+
+class _LocalizedDay {
+  _LocalizedDay(this.format);
+
+  final String format;
+
+  DateFormat get _formatter => DateFormat(format);
+
+  //January 1, 2001, was a Monday.
+  List<String Function(String)> get _days => _range(7)
+      .map(
+        (int i) =>
+            (String format) => _formatter.format(Date(2001, 1, i + 1)),
+      )
+      .toList();
+
+  /// Note: this varies from the Python version in that the returned item is always a list, whereas in Python it may be a list or a single `String Function(String)`.
+  List<String> operator [](Object i) {
+    final List<String Function(String)> funcs = i is _Slice
+        ? _days.sublist(i.$1, i.$2)
+        : [_days[i as int]];
+
+    return funcs.map((String Function(String) func) => func(format)).toList();
+  }
+
+  int get length => 7;
+}
+
+// Full and abbreviated names of weekdays
+final _LocalizedDay _dayName = _LocalizedDay('%A');
+final _LocalizedDay _dayAbbr = _LocalizedDay('%a');
 
 /// Return [True] for leap years, [False] for non-leap years.
 bool isLeap(int year) => year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
