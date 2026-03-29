@@ -8,6 +8,16 @@ library;
 
 int _boolToInt(bool a) => a ? 1 : 0;
 
+extension CenterString on String {
+  // TODO implement String extension method
+  /// Equivalent of Python's built-in `center()` function.
+  ///
+  /// Return centered in a string of length [width]. Padding is done using the specified [fillChar] (default is an ASCII space). The original string is returned if width is less than or equal to `this.length`.
+  String center(int width, [String fillChar = ' ']) {
+    throw UnimplementedError();
+  }
+}
+
 /// Equivalent of Python's [`range()`](https://docs.python.org/3/library/stdtypes.html#range).
 Iterable<int> _range(int start, int stop, [int step = 1]) sync* {
   for (int i = start; i < stop; i += step) {
