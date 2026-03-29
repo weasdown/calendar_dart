@@ -430,10 +430,9 @@ base class Calendar {
 final class TextCalendar extends Calendar {
   TextCalendar();
 
-  // TODO implement method
   /// Print a single week (no newline).
-  void prWeek(int theWeek, int width) {
-    throw UnimplementedError();
+  void prWeek(List<(int, int)> theWeek, int width) {
+    print(formatWeek(theWeek, width));
   }
 
   /// Returns a formatted day.
