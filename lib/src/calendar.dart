@@ -6,6 +6,8 @@
 /// set the first day of the week (0=Monday, 6=Sunday).
 library;
 
+import 'dart:math';
+
 import 'package:calendar_dart/date.dart';
 import 'package:intl/intl.dart';
 
@@ -488,10 +490,22 @@ final class TextCalendar extends Calendar {
     throw UnimplementedError();
   }
 
-  // TODO implement method
   /// Return a month's calendar string (multi-line).
   String formatMonth(int theYear, int theMonth, [int w = 0, int l = 0]) {
-    throw UnimplementedError();
+    w = max(2, w);
+    l = max(1, l);
+    String s = formatMonthName(theYear, theMonth, 7 * (w + 1) - 1);
+    s = s.trimRight();
+    s += '\n' * l;
+    s += formatWeekHeader(w).trimRight();
+    s += '\n' * l;
+
+    for (List<(int, int)> week in monthDays2Calendar(theYear, theMonth)) {
+      s += formatWeek(week, w).trimRight();
+      s += '\n' * l;
+    }
+
+    return s;
   }
 
   // TODO implement method
