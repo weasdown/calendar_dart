@@ -154,12 +154,15 @@ class _LocalizedDay {
       .toList();
 
   dynamic operator [](Object i) {
+    assert(i is int || i is _Slice);
+
+    // If i is a _Slice, this operator returns a List<String Function(String)>.
     if (i is _Slice) {
       final List<String Function(String)> funcs =
           List<String Function(String)>.from(_SliceOnList(_days)[i]);
       return funcs.map((String Function(String) f) => f(format)).toList();
     }
-    // Assumed i is an int if it's not a _Slice
+    // If i is an int, this operator returns a String Function(String).
     else {
       final String Function(String) funcs = _days[i as int];
       return funcs(format);
