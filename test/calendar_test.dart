@@ -1,4 +1,4 @@
-import 'package:calendar_dart/calendar_dart.dart';
+import 'package:calendar_dart/calendar.dart';
 import 'package:test/test.dart';
 
 void main() {
