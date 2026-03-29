@@ -124,7 +124,7 @@ int _monthLen(int year, int month) =>
 /// Base calendar class.
 ///
 /// This class doesn't do any formatting. It simply provides data to subclasses.
-class Calendar {
+base class Calendar {
   Calendar({this.firstWeekDay = 0});
 
   /// 0 = Monday, 6 = Sunday
