@@ -173,8 +173,8 @@ class _LocalizedDay {
 }
 
 // Full and abbreviated names of weekdays
-final _LocalizedDay _dayName = _LocalizedDay('%A');
-final _LocalizedDay _dayAbbr = _LocalizedDay('%a');
+final _LocalizedDay _dayName = _LocalizedDay('EEEE');
+final _LocalizedDay _dayAbbr = _LocalizedDay('E');
 
 /// Return [True] for leap years, [False] for non-leap years.
 bool isLeap(int year) => year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
