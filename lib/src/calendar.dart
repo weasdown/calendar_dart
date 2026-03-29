@@ -8,6 +8,13 @@ library;
 
 int _boolToInt(bool a) => a ? 1 : 0;
 
+/// Equivalent of Python's [`range()`](https://docs.python.org/3/library/stdtypes.html#range).
+Iterable<int> range(int start, int stop, [int step = 1]) sync* {
+  for (int i = start; i < stop; i += step) {
+    yield i;
+  }
+}
+
 /// Repeats [value] [n] times.
 ///
 /// Approximately equivalent to Python's [`itertools.repeat()`], but with a mandatory [times] argument.
