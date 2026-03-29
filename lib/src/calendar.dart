@@ -153,13 +153,17 @@ class _LocalizedDay {
       )
       .toList();
 
-  /// Note: this varies from the Python version in that the returned item is always a list, whereas in Python it may be a list or a single `String Function(String)`.
-  List<String> operator [](Object i) {
-    final List<String Function(String)> funcs = i is _Slice
-        ? _days.sublist(i.$1, i.$2)
-        : [_days[i as int]];
-
-    return funcs.map((String Function(String) func) => func(format)).toList();
+  dynamic operator [](Object i) {
+    if (i is _Slice) {
+      final List<String Function(String)> funcs =
+          List<String Function(String)>.from(_SliceOnList(_days)[i]);
+      return funcs.map((String Function(String) f) => f(format)).toList();
+    }
+    // Assumed i is an int if it's not a _Slice
+    else {
+      final String Function(String) funcs = _days[i as int];
+      return funcs(format);
+    }
   }
 
   int get length => 7;
