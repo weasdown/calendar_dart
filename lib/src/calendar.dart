@@ -89,6 +89,9 @@ DateTime date(int year, int month, int day) => DateTime(year, month, day);
 /// Number of days per month (except for February in leap years)
 const List<int> mDays = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
+/// Equivalent to Python's `slice`.
+typedef _Slice = (int start, int stop);
+
 /// Return [True] for leap years, [False] for non-leap years.
 bool isLeap(int year) => year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
 
