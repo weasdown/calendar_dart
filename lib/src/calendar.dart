@@ -471,7 +471,6 @@ final class TextCalendar extends Calendar {
   String formatWeekHeader(int width) =>
       iterWeekDays().map((int i) => formatWeekday(i, width)).toList().join(' ');
 
-  // TODO implement method
   /// Return a formatted month name.
   String formatMonthName(
     int theYear,
@@ -480,6 +479,14 @@ final class TextCalendar extends Calendar {
     bool withYear = true,
   ]) {
     throw UnimplementedError();
+
+    // _validateMonth(theMonth);
+    //
+    // String s = monthName[theMonth];
+    // if (withYear) {
+    //   s = '$s $theYear';
+    // }
+    // return s.center(width);
   }
 
   // TODO implement method
