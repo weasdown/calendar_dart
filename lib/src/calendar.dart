@@ -352,10 +352,17 @@ final class TextCalendar extends Calendar {
     throw UnimplementedError();
   }
 
-  // TODO implement method
   /// Returns a formatted day.
   String formatDay(int day, int weekday, int width) {
-    throw UnimplementedError();
+    final String s;
+    if (day == 0) {
+      s = '';
+    } else {
+      // right-align single-digit days
+      s = day.toString().length == 1 ? ' $day' : '$day';
+    }
+
+    return s.center(width);
   }
 
   // TODO implement method
