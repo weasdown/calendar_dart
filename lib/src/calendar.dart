@@ -455,10 +455,15 @@ final class TextCalendar extends Calendar {
       .toList()
       .join(' ');
 
-  // TODO implement method
   /// Returns a formatted week day name.
   String formatWeekday(int day, int width) {
-    throw UnimplementedError();
+    final _LocalizedDay names = width >= 9 ? _dayName : _dayAbbr;
+
+    String dayName = names[day];
+
+    return width > dayName.length
+        ? dayName.center(width)
+        : dayName.substring(0, width).center(width);
   }
 
   // TODO implement method
