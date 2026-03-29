@@ -337,31 +337,37 @@ final class TextCalendar extends Calendar {
   TextCalendar();
 
   // TODO implement method
+  /// Print a single week (no newline).
   void prweek(int theWeek, int width) {
     throw UnimplementedError();
   }
 
   // TODO implement method
+  /// Returns a formatted day.
   String formatday(int day, int weekday, int width) {
     throw UnimplementedError();
   }
 
   // TODO implement method
+  /// Returns a single week in a string (no newline).
   String formatweek(int theWeek, int width) {
     throw UnimplementedError();
   }
 
   // TODO implement method
+  /// Returns a formatted week day name.
   String formatweekday(int day, int width) {
     throw UnimplementedError();
   }
 
   // TODO implement method
+  /// Return a header for a week.
   String formatweekheader(int width) {
     throw UnimplementedError();
   }
 
   // TODO implement method
+  /// Return a formatted month name.
   String formatmonthname(
     int theYear,
     int theMonth,
@@ -372,21 +378,25 @@ final class TextCalendar extends Calendar {
   }
 
   // TODO implement method
+  /// Print a month's calendar.
   void prmonth(int theYear, int theMonth, [int w = 0, int l = 0]) {
     throw UnimplementedError();
   }
 
   // TODO implement method
+  /// Return a month's calendar string (multi-line).
   String formatmonth(int theYear, int theMonth, [int w = 0, int l = 0]) {
     throw UnimplementedError();
   }
 
   // TODO implement method
+  /// Returns a year's calendar as a multi-line string.
   String formatyear(int theYear, [w = 2, l = 1, c = 6, int m = 3]) {
     throw UnimplementedError();
   }
 
   // TODO implement method
+  /// Print a year's calendar.
   void pryear(int theYear, [int w = 0, int l = 0, c = 6, int m = 3]) {
     throw UnimplementedError();
   }
