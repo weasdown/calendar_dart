@@ -133,6 +133,11 @@ const List<int> mDays = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 /// Equivalent to Python's `slice`.
 typedef _Slice = (int start, int stop);
 
+extension _SliceOnList on List {
+  /// Enables using a _Slice to access a sublist, equivalent to `sublist()`.
+  List operator [](_Slice slice) => sublist(slice.$1, slice.$2);
+}
+
 class _LocalizedDay {
   _LocalizedDay(this.format);
 
