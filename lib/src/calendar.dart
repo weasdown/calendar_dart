@@ -467,11 +467,9 @@ final class TextCalendar extends Calendar {
         : dayName.substring(0, width).center(width);
   }
 
-  // TODO implement method
   /// Return a header for a week.
-  String formatWeekHeader(int width) {
-    throw UnimplementedError();
-  }
+  String formatWeekHeader(int width) =>
+      iterWeekDays().map((int i) => formatWeekday(i, width)).toList().join(' ');
 
   // TODO implement method
   /// Return a formatted month name.
