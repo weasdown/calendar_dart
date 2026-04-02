@@ -204,6 +204,10 @@ class _LocalizedMonth {
 final _LocalizedDay _dayName = _LocalizedDay('EEEE');
 final _LocalizedDay _dayAbbr = _LocalizedDay('E');
 
+// Full and abbreviated names of months (1-based arrays!!!)
+final _LocalizedMonth _monthName = _LocalizedMonth('%B');
+final _LocalizedMonth _monthAbbr = _LocalizedMonth('%b');
+
 /// Return [True] for leap years, [False] for non-leap years.
 bool isLeap(int year) => year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
 
