@@ -511,15 +511,13 @@ final class TextCalendar extends Calendar {
     int width, [
     bool withYear = true,
   ]) {
-    throw UnimplementedError();
+    _validateMonth(theMonth);
 
-    // _validateMonth(theMonth);
-    //
-    // String s = monthName[theMonth];
-    // if (withYear) {
-    //   s = '$s $theYear';
-    // }
-    // return s.center(width);
+    String s = _monthName[theMonth];
+    if (withYear) {
+      s = '$s $theYear';
+    }
+    return s.center(width);
   }
 
   // TODO implement method
