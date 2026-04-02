@@ -140,6 +140,35 @@ extension _SliceOnList on List {
   List operator [](_Slice slice) => sublist(slice.$1, slice.$2);
 }
 
+class _LocalizedMonth {
+  _LocalizedMonth(this.format);
+
+  final String format;
+
+  DateFormat get _formatter => DateFormat(format);
+
+  // TODO implement _months getter
+  List<String Function(String)> get _months {
+    throw UnimplementedError(
+      '_LocalizedMonth._months getter is not yet implemented.',
+    )
+    //     List.generate(7, (int i) {
+    //   //January 1, 2001, was a Monday.
+    //   return (String format) => _formatter.format(Date(2001, 1, i + 1));
+    // })
+    ;
+  }
+
+  // TODO implement [] operator
+  dynamic operator [](Object i) {
+    throw UnimplementedError(
+      '_LocalizedMonth.[] operator is not yet implemented.',
+    );
+  }
+
+  int get length => 13;
+}
+
 class _LocalizedDay {
   _LocalizedDay(this.format);
 
