@@ -204,6 +204,7 @@ class _LocalizedMonth {
 final _LocalizedDay _dayName = _LocalizedDay('EEEE');
 final _LocalizedDay _dayAbbr = _LocalizedDay('E');
 
+// FIXME fix formatting codes
 // Full and abbreviated names of months (1-based arrays!!!)
 final _LocalizedMonth _monthName = _LocalizedMonth('%B');
 final _LocalizedMonth _monthAbbr = _LocalizedMonth('%b');
