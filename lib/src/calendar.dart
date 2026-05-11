@@ -564,4 +564,20 @@ final class TextCalendar extends Calendar {
   void prYear(int theYear, [int w = 0, int l = 0, c = 6, int m = 3]) {
     throw UnimplementedError();
   }
+
+const int _colWidth = 7 * 3 - 1; // Amount printed by prweek()
+const int _spacing = 6; // Number of spaces between columns
+
+/// Returns a string formatted from n strings, centered within n columns.
+String formatString(
+  List<String> cols, [
+  int colWidth = _colWidth,
+  int spacing = _spacing,
+]) {
+  // throw UnimplementedError(
+  //   'The formatString() function is not yet implemented.',
+  // );
+
+  final String newSpacing = List.filled(spacing, ' ').join('');
+  return cols.map((String c) => c.center(colWidth)).join(newSpacing);
 }
