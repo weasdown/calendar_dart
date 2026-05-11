@@ -182,9 +182,7 @@ class _LocalizedMonth {
 
   // TODO implement _months getter
   List<String Function(String)> get _months {
-    throw UnimplementedError(
-      '_LocalizedMonth._months getter is not yet implemented.',
-    )
+    throw UnimplementedGetterError(runtimeType.toString(), '_months')
     //     List.generate(7, (int i) {
     //   //January 1, 2001, was a Monday.
     //   return (String format) => _formatter.format(Date(2001, 1, i + 1));
@@ -194,9 +192,7 @@ class _LocalizedMonth {
 
   // TODO implement [] operator
   dynamic operator [](Object i) {
-    throw UnimplementedError(
-      '_LocalizedMonth.[] operator is not yet implemented.',
-    );
+    throw UnimplementedOperatorError(runtimeType.toString(), '[]');
   }
 
   int get length => 13;
@@ -526,7 +522,7 @@ final class TextCalendar extends Calendar {
   // TODO implement method
   /// Print a month's calendar.
   void prMonth(int theYear, int theMonth, [int w = 0, int l = 0]) {
-    throw UnimplementedError();
+    throw UnimplementedMethodError(runtimeType.toString(), 'prMonth');
   }
 
   /// Return a month's calendar string (multi-line).
@@ -550,7 +546,7 @@ final class TextCalendar extends Calendar {
   // TODO implement method
   /// Returns a year's calendar as a multi-line string.
   String formatYear(int theYear, [w = 2, l = 1, c = 6, int m = 3]) {
-    throw UnimplementedError();
+    throw UnimplementedMethodError(runtimeType.toString(), 'formatYear');
   }
 
   // TODO implement method
