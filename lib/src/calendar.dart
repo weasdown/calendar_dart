@@ -70,7 +70,7 @@ Iterable<int> _range(int stop, [int start = 0, int step = 1]) sync* {
   }
 }
 
-/// Repeats [value] [n] times.
+/// Repeats [value] [times] times.
 ///
 /// Approximately equivalent to Python's [`itertools.repeat()`], but with a mandatory [times] argument.
 ///
