@@ -553,13 +553,105 @@ final class TextCalendar extends Calendar {
     return s;
   }
 
-  // TODO implement method
+  // FIXME fix method
   /// Returns a year's calendar as a multi-line string.
   String formatYear(int theYear, [w = 2, l = 1, c = 6, int m = 3]) {
-    throw UnimplementedMethodError(runtimeType.toString(), 'formatYear');
+    /// w = max(2, w)
+    /// l = max(1, l)
+    /// c = max(2, c)
+    /// colwidth = (w + 1) * 7 - 1
+    /// v = []
+    /// a = v.append
+    /// a(repr(theyear).center(colwidth*m+c*(m-1)).rstrip())
+    /// a('\n'*l)
+    /// header = self.formatweekheader(w)
+    /// for (i, row) in enumerate(self.yeardays2calendar(theyear, m)):
+    ///     # months in this row
+    ///     months = range(m*i+1, min(m*(i+1)+1, 13))
+    ///     a('\n'*l)
+    ///     names = (self.formatmonthname(theyear, k, colwidth, False)
+    ///              for k in months)
+    ///     a(formatstring(names, colwidth, c).rstrip())
+    ///     a('\n'*l)
+    ///     headers = (header for k in months)
+    ///     a(formatstring(headers, colwidth, c).rstrip())
+    ///     a('\n'*l)
+    ///
+    ///     # max number of weeks for this row
+    ///     height = max(len(cal) for cal in row)
+    ///     for j in range(height):
+    ///         weeks = []
+    ///         for cal in row:
+    ///             if j >= len(cal):
+    ///                 weeks.append('')
+    ///             else:
+    ///                 weeks.append(self.formatweek(cal[j], w))
+    ///         a(formatstring(weeks, colwidth, c).rstrip())
+    ///         a('\n' * l)
+    /// return ''.join(v)
+
+    w = max(2, w);
+    l = max(1, l);
+    c = max(2, c);
+    final int colWidth = (w + 1) * 7 - 1;
+    List v = [];
+    List a(Object str) {
+      v.add(str);
+      return v;
+    }
+
+    void lNewlines() {
+      a(
+        theYear
+            .toString()
+            .center((colWidth * m + c * (m - 1)).toInt())
+            .trimRight(),
+      );
+    }
+
+    lNewlines();
+    a(List<String>.filled(l, '\n'));
+    final String header = formatWeekHeader(w);
+
+    for (final (i, row) in yearDays2Calendar(theYear, m).indexed) {
+      // months in this row
+      final Iterable<int> months = _range(m * i + 1, min(m * (i + 1) + 1, 13));
+      lNewlines();
+      final List<String> names = List.generate(months.length, (k) {
+        return formatMonthName(theYear, k, colWidth, false);
+      });
+      a(formatString(names, colWidth, c).trimRight());
+      lNewlines();
+      final List<String> headers = List<String>.from(
+        months.map((int k) => header),
+      );
+      a(formatString(headers, colWidth, c).trimRight());
+      lNewlines();
+
+      // max number of weeks for this row
+      final int height = List<int>.from(
+        row.map((cal) => cal.length),
+      ).reduce((a, b) => max(a, b));
+      for (int j in _range(height)) {
+        List<String> weeks = [];
+        for (var cal in row) {
+          if (j >= cal.length) {
+            weeks.add('');
+          } else {
+            weeks.add(formatWeek(cal[j], w));
+          }
+        }
+        a(formatString(weeks, colWidth, c).trimRight());
+        lNewlines();
+      }
+    }
+
+    return v.join(
+      '',
+    ); // FIXME v not having the correct text added - remains empty
+    // throw UnimplementedMethodError(runtimeType.toString(), 'formatYear');
   }
 
-  // TODO implement method
   /// Print a year's calendar.
   void prYear(int theYear, [int w = 0, int l = 0, c = 6, int m = 3]) =>
       print(formatYear(theYear, w, l, c, m));
