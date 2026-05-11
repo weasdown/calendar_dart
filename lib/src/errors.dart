@@ -15,3 +15,12 @@ class UnimplementedGetterError extends UnimplementedError {
   final String className;
   final String getterName;
 }
+
+/// Simplifies throwing of [UnimplementedError]s for unimplemented operators.
+class UnimplementedOperatorError extends UnimplementedError {
+  UnimplementedOperatorError(this.className, this.operatorName)
+    : super('$className.$operatorName operator is not yet implemented.');
+
+  final String className;
+  final String operatorName;
+}
