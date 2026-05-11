@@ -6,3 +6,12 @@ class UnimplementedMethodError extends UnimplementedError {
   final String className;
   final String methodName;
 }
+
+/// Simplifies throwing of [UnimplementedError]s for unimplemented getters.
+class UnimplementedGetterError extends UnimplementedError {
+  UnimplementedGetterError(this.className, this.getterName)
+    : super('$className.$getterName getter is not yet implemented.');
+
+  final String className;
+  final String getterName;
+}
