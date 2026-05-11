@@ -142,8 +142,8 @@ extension _SliceOnList on List {
   List operator [](_Slice slice) => sublist(slice.$1, slice.$2);
 }
 
-class _LocalizedDay {
-  _LocalizedDay(this.format);
+class LocalizedDay {
+  LocalizedDay(this.format);
 
   final String format;
 
@@ -173,8 +173,8 @@ class _LocalizedDay {
   int get length => 7;
 }
 
-class _LocalizedMonth {
-  _LocalizedMonth(this.format);
+class LocalizedMonth {
+  LocalizedMonth(this.format);
 
   final String format;
 
@@ -210,12 +210,12 @@ class _LocalizedMonth {
 }
 
 // Full and abbreviated names of weekdays
-final _LocalizedDay _dayName = _LocalizedDay('EEEE');
-final _LocalizedDay _dayAbbr = _LocalizedDay('E');
+final LocalizedDay dayName = LocalizedDay('EEEE');
+final LocalizedDay dayAbbr = LocalizedDay('E');
 
 // Full and abbreviated names of months (1-based arrays!!!)
-final _LocalizedMonth _monthName = _LocalizedMonth('MMMM');
-final _LocalizedMonth _monthAbbr = _LocalizedMonth('MMM');
+final LocalizedMonth monthName = LocalizedMonth('MMMM');
+final LocalizedMonth monthAbbr = LocalizedMonth('MMM');
 
 /// Return [True] for leap years, [False] for non-leap years.
 bool isLeap(int year) => year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
@@ -500,13 +500,13 @@ final class TextCalendar extends Calendar {
 
   /// Returns a formatted week day name.
   String formatWeekday(int day, int width) {
-    final _LocalizedDay names = width >= 9 ? _dayName : _dayAbbr;
+    final LocalizedDay names = width >= 9 ? dayName : dayAbbr;
 
-    String dayName = names[day];
+    String name = names[day];
 
-    return width > dayName.length
-        ? dayName.center(width)
-        : dayName.substring(0, width).center(width);
+    return width > name.length
+        ? name.center(width)
+        : name.substring(0, width).center(width);
   }
 
   /// Return a header for a week.
@@ -522,7 +522,7 @@ final class TextCalendar extends Calendar {
   ]) {
     _validateMonth(theMonth);
 
-    String s = _monthName[theMonth];
+    String s = monthName[theMonth];
     if (withYear) {
       s = '$s $theYear';
     }
