@@ -187,7 +187,19 @@ class _LocalizedMonth {
 
   // TODO implement [] operator
   dynamic operator [](Object i) {
-    throw UnimplementedOperatorError(runtimeType.toString(), '[]');
+    assert(i is int || i is _Slice);
+
+    // If i is a _Slice, this operator returns a List<String Function(String)>.
+    if (i is _Slice) {
+      final List<String Function(String)> funcs =
+          List<String Function(String)>.from(_SliceOnList(_months)[i]);
+      return funcs.map((String Function(String) f) => f(format)).toList();
+    }
+    // If i is an int, this operator returns a String Function(String).
+    else {
+      final String Function(String) func = _months[i as int];
+      return func(format);
+    }
   }
 
   int get length => 13;
