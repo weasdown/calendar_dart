@@ -142,35 +142,6 @@ extension _SliceOnList on List {
   List operator [](_Slice slice) => sublist(slice.$1, slice.$2);
 }
 
-class _LocalizedMonth {
-  _LocalizedMonth(this.format);
-
-  final String format;
-
-  DateFormat get _formatter => DateFormat(format);
-
-  // TODO implement _months getter
-  List<String Function(String)> get _months {
-    throw UnimplementedError(
-      '_LocalizedMonth._months getter is not yet implemented.',
-    )
-    //     List.generate(7, (int i) {
-    //   //January 1, 2001, was a Monday.
-    //   return (String format) => _formatter.format(Date(2001, 1, i + 1));
-    // })
-    ;
-  }
-
-  // TODO implement [] operator
-  dynamic operator [](Object i) {
-    throw UnimplementedError(
-      '_LocalizedMonth.[] operator is not yet implemented.',
-    );
-  }
-
-  int get length => 13;
-}
-
 class _LocalizedDay {
   _LocalizedDay(this.format);
 
@@ -202,9 +173,43 @@ class _LocalizedDay {
   int get length => 7;
 }
 
+class _LocalizedMonth {
+  _LocalizedMonth(this.format);
+
+  final String format;
+
+  DateFormat get _formatter => DateFormat(format);
+
+  // TODO implement _months getter
+  List<String Function(String)> get _months {
+    throw UnimplementedError(
+      '_LocalizedMonth._months getter is not yet implemented.',
+    )
+    //     List.generate(7, (int i) {
+    //   //January 1, 2001, was a Monday.
+    //   return (String format) => _formatter.format(Date(2001, 1, i + 1));
+    // })
+    ;
+  }
+
+  // TODO implement [] operator
+  dynamic operator [](Object i) {
+    throw UnimplementedError(
+      '_LocalizedMonth.[] operator is not yet implemented.',
+    );
+  }
+
+  int get length => 13;
+}
+
 // Full and abbreviated names of weekdays
 final _LocalizedDay _dayName = _LocalizedDay('EEEE');
 final _LocalizedDay _dayAbbr = _LocalizedDay('E');
+
+// FIXME fix formatting codes
+// Full and abbreviated names of months (1-based arrays!!!)
+final _LocalizedMonth _monthName = _LocalizedMonth('%B');
+final _LocalizedMonth _monthAbbr = _LocalizedMonth('%b');
 
 /// Return [True] for leap years, [False] for non-leap years.
 bool isLeap(int year) => year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
@@ -509,15 +514,13 @@ final class TextCalendar extends Calendar {
     int width, [
     bool withYear = true,
   ]) {
-    throw UnimplementedMethodError(runtimeType.toString(), 'formatMonthName');
+    _validateMonth(theMonth);
 
-    // _validateMonth(theMonth);
-    //
-    // String s = monthName[theMonth];
-    // if (withYear) {
-    //   s = '$s $theYear';
-    // }
-    // return s.center(width);
+    String s = _monthName[theMonth];
+    if (withYear) {
+      s = '$s $theYear';
+    }
+    return s.center(width);
   }
 
   // TODO implement method
