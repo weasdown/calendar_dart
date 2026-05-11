@@ -181,14 +181,9 @@ class _LocalizedMonth {
   DateFormat get _formatter => DateFormat(format);
 
   // TODO implement _months getter
-  List<String Function(String)> get _months {
-    throw UnimplementedGetterError(runtimeType.toString(), '_months')
-    //     List.generate(7, (int i) {
-    //   //January 1, 2001, was a Monday.
-    //   return (String format) => _formatter.format(Date(2001, 1, i + 1));
-    // })
-    ;
-  }
+  List<String Function(String)> get _months => List.generate(12, (int i) {
+    return (String format) => _formatter.format(Date(2001, i + 1, 1));
+  });
 
   // TODO implement [] operator
   dynamic operator [](Object i) {
