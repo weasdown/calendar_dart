@@ -561,9 +561,9 @@ final class TextCalendar extends Calendar {
 
   // TODO implement method
   /// Print a year's calendar.
-  void prYear(int theYear, [int w = 0, int l = 0, c = 6, int m = 3]) {
-    throw UnimplementedError();
-  }
+  void prYear(int theYear, [int w = 0, int l = 0, c = 6, int m = 3]) =>
+      print(formatYear(theYear, w, l, c, m));
+}
 
 const int _colWidth = 7 * 3 - 1; // Amount printed by prweek()
 const int _spacing = 6; // Number of spaces between columns
