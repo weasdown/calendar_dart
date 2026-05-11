@@ -11,6 +11,8 @@ import 'dart:math';
 import 'package:calendar_dart/date.dart';
 import 'package:intl/intl.dart';
 
+import 'errors.dart';
+
 int _boolToInt(bool a) => a ? 1 : 0;
 
 extension CenterString on String {
@@ -507,7 +509,7 @@ final class TextCalendar extends Calendar {
     int width, [
     bool withYear = true,
   ]) {
-    throw UnimplementedError();
+    throw UnimplementedMethodError(runtimeType.toString(), 'formatMonthName');
 
     // _validateMonth(theMonth);
     //
