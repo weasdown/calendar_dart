@@ -671,10 +671,12 @@ final class HTMLCalendar extends Calendar {
   String formatWeekday(int day) =>
       '<th class="${cssClassesWeekdayHead[day]}">${dayAbbr[day]}</th>';
 
-  // TODO implement method
   /// Return a header for a week as a table row.
   String formatWeekHeader() {
-    throw UnimplementedMethodError(runtimeType.toString(), 'formatWeekHeader');
+    final String s = List<String>.from(
+      iterWeekDays().map((int i) => formatWeekday(i)),
+    ).join('');
+    return '<tr>$s</tr>';
   }
 
   // TODO implement method
