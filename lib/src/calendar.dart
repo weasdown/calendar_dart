@@ -6,6 +6,7 @@
 /// set the first day of the week (0=Monday, 6=Sunday).
 library;
 
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:calendar_dart/date.dart';
@@ -745,7 +746,42 @@ final class HTMLCalendar extends Calendar {
     String? css = 'calendar.css',
     String? encoding,
   ]) {
+    // TODO implement getting of default encoding from system, rather than assuming UTF-8.
+    encoding = encoding ?? 'utf-8';
+    final List<String> v = [];
+    void Function(String) a = v.add;
+    a('<?xml version="1.0" encoding="$encoding"?>\n');
+    a(
+      '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">\n',
+    );
+    a('<html>\n');
+    a('<head>\n');
+    a(
+      '<meta http-equiv="Content-Type" content="text/html; charset=$encoding" />\n',
+    );
+    if (css != null) {
+      a('<link rel="stylesheet" type="text/css" href="$css" />\n');
+    }
+    a('<title>Calendar for $theYear</title>\n');
+    a('</head>\n');
+    a('<body>\n');
+    a(formatYear(theYear, width));
+    a('</body>\n');
+    a('</html>\n');
+
+    Converter<String, List<int>> encoder;
+    if (encoding == 'utf-8') {
+      encoder = utf8.encoder;
+    } else {
+      throw UnimplementedError(
+        'Only encoding using UTF-8 is supported, but "$encoding" was specified.',
+      );
+    }
+
     throw UnimplementedMethodError(runtimeType.toString(), 'formatYearPage');
+
+    // return encoder.convert(input);
+    // return v.join('').encode(encoding, "xmlcharrefreplace");
   }
 }
 
