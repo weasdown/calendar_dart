@@ -679,10 +679,13 @@ final class HTMLCalendar extends Calendar {
     return '<tr>$s</tr>';
   }
 
-  // TODO implement method
   /// Return a month name as a table row.
   String formatMonthName(int theYear, int theMonth, [bool withYear = true]) {
-    throw UnimplementedMethodError(runtimeType.toString(), 'formatMonthName');
+    _validateMonth(theMonth);
+    String s = withYear
+        ? '${monthName[theMonth]} $theYear'
+        : monthName[theMonth];
+    return '<tr><th colspan="7" class="${HTMLCalendar.cssClassMonthHead}">$s</th></tr>';
   }
 
   // TODO implement method
