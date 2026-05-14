@@ -661,13 +661,13 @@ final class HTMLCalendar extends Calendar {
 
   // TODO implement method
   /// Return a complete week as a table row.
-  String formatWeek() {
+  String formatWeek(int theWeek) {
     throw UnimplementedMethodError(runtimeType.toString(), 'formatDay');
   }
 
   // TODO implement method
   /// Return a weekday name as a table header.
-  String formatWeekday() {
+  String formatWeekday(int day) {
     throw UnimplementedMethodError(runtimeType.toString(), 'formatWeekday');
   }
 
@@ -679,25 +679,30 @@ final class HTMLCalendar extends Calendar {
 
   // TODO implement method
   /// Return a month name as a table row.
-  String formatMonthName() {
+  String formatMonthName(int theYear, int theMonth, [bool withYear = true]) {
     throw UnimplementedMethodError(runtimeType.toString(), 'formatMonthName');
   }
 
   // TODO implement method
   /// Return a formatted month as a table.
-  String formatMonth() {
+  String formatMonth(int theYear, int theMonth, [bool withYear = true]) {
     throw UnimplementedMethodError(runtimeType.toString(), 'formatMonth');
   }
 
   // TODO implement method
   /// Return a formatted year as a table of tables.
-  String formatYear() {
+  String formatYear(int theYear, [int width = 3]) {
     throw UnimplementedMethodError(runtimeType.toString(), 'formatYear');
   }
 
   // TODO implement method
   /// Return a formatted year as a complete HTML page.
-  String formatYearPage() {
+  String formatYearPage(
+    int theYear, [
+    int width = 3,
+    String? css = 'calendar.css',
+    String? encoding,
+  ]) {
     throw UnimplementedMethodError(runtimeType.toString(), 'formatYearPage');
   }
 }
