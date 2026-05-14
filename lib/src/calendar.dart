@@ -654,41 +654,49 @@ final class HTMLCalendar extends Calendar {
   /// CSS class for the whole year table
   static const cssClassYear = 'year';
 
+  // TODO implement method
   /// Return a day as a table cell.
   String formatDay() {
     throw UnimplementedMethodError(runtimeType.toString(), 'formatDay');
   }
 
+  // TODO implement method
   /// Return a complete week as a table row.
   String formatWeek() {
     throw UnimplementedMethodError(runtimeType.toString(), 'formatDay');
   }
 
+  // TODO implement method
   /// Return a weekday name as a table header.
   String formatWeekday() {
     throw UnimplementedMethodError(runtimeType.toString(), 'formatWeekday');
   }
 
+  // TODO implement method
   /// Return a header for a week as a table row.
   String formatWeekHeader() {
     throw UnimplementedMethodError(runtimeType.toString(), 'formatWeekHeader');
   }
 
+  // TODO implement method
   /// Return a month name as a table row.
   String formatMonthName() {
     throw UnimplementedMethodError(runtimeType.toString(), 'formatMonthName');
   }
 
+  // TODO implement method
   /// Return a formatted month as a table.
   String formatMonth() {
     throw UnimplementedMethodError(runtimeType.toString(), 'formatMonth');
   }
 
+  // TODO implement method
   /// Return a formatted year as a table of tables.
   String formatYear() {
     throw UnimplementedMethodError(runtimeType.toString(), 'formatYear');
   }
 
+  // TODO implement method
   /// Return a formatted year as a complete HTML page.
   String formatYearPage() {
     throw UnimplementedMethodError(runtimeType.toString(), 'formatYearPage');
