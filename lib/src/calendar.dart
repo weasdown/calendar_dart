@@ -688,10 +688,31 @@ final class HTMLCalendar extends Calendar {
     return '<tr><th colspan="7" class="${HTMLCalendar.cssClassMonthHead}">$s</th></tr>';
   }
 
-  // TODO implement method
   /// Return a formatted month as a table.
   String formatMonth(int theYear, int theMonth, [bool withYear = true]) {
-    throw UnimplementedMethodError(runtimeType.toString(), 'formatMonth');
+    final List v = [];
+
+    // Define function equivalent to Python's `a = v.append`.
+    List a(Object str) {
+      v.add(str);
+      return v;
+    }
+
+    a(
+      '<table border="0" cellpadding="0" cellspacing="0" class="${HTMLCalendar.cssClassMonth}">',
+    );
+    a('\n');
+    a(formatMonthName(theYear, theMonth, withYear = withYear));
+    a('\n');
+    a(formatWeekHeader());
+    a('\n');
+    for (List<(int, int)> week in monthDays2Calendar(theYear, theMonth)) {
+      a(formatWeek(week));
+      a('\n');
+    }
+    a('</table>');
+    a('\n');
+    return v.join('');
   }
 
   // TODO implement method
