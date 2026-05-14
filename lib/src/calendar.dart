@@ -6,16 +6,71 @@
 /// set the first day of the week (0=Monday, 6=Sunday).
 library;
 
+import 'dart:math';
+
+import 'package:calendar_dart/date.dart';
+import 'package:intl/intl.dart';
+import 'package:meta/meta.dart';
+
 int _boolToInt(bool a) => a ? 1 : 0;
 
+extension CenterString on String {
+  /// Equivalent of Python's built-in `center()` function.
+  ///
+  /// Return centered in a string of length [width]. Padding is done using the specified [fillChar] (default is an ASCII space). The original string is returned if width is less than or equal to `this.length`.
+  String center(int width, [String fillChar = ' ']) {
+    if (width <= length) {
+      return this;
+    }
+    // width > this.length
+    else {
+      // Add extra copies of fillChar to the start and end of this string, to make the total length equal width.
+
+      final extra = width - length; // Number of characters to add.
+      final int halfExtra = (extra / 2).toInt();
+
+      String result;
+      // If extra is even, there will be an equal number of fillChars at the start and end of the result.
+      if (extra.isEven) {
+        result = [
+          ...repeat(fillChar, halfExtra),
+          this,
+          ...repeat(fillChar, halfExtra),
+        ].join('');
+      }
+      // extra is odd, so there will be more fillChars at one end of the result than the other.
+      // If length is also odd, the extra fillChar goes at the end. If not, it goes at the start.
+      else {
+        if (length.isOdd) {
+          result = [
+            ...repeat(fillChar, halfExtra),
+            this,
+            ...repeat(fillChar, halfExtra + 1),
+          ].join('');
+        } else {
+          result = [
+            ...repeat(fillChar, halfExtra + 1),
+            this,
+            ...repeat(fillChar, halfExtra),
+          ].join('');
+        }
+      }
+
+      assert(result.length == width);
+      return result;
+    }
+  }
+}
+
 /// Equivalent of Python's [`range()`](https://docs.python.org/3/library/stdtypes.html#range).
-Iterable<int> _range(int start, int stop, [int step = 1]) sync* {
+@visibleForTesting
+Iterable<int> range(int stop, [int start = 0, int step = 1]) sync* {
   for (int i = start; i < stop; i += step) {
     yield i;
   }
 }
 
-/// Repeats [value] [n] times.
+/// Repeats [value] [times] times.
 ///
 /// Approximately equivalent to Python's [`itertools.repeat()`], but with a mandatory [times] argument.
 ///
@@ -79,7 +134,88 @@ DateTime date(int year, int month, int day) => DateTime(year, month, day);
 /// Number of days per month (except for February in leap years)
 const List<int> mDays = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
-/// Return [True] for leap years, [False] for non-leap years.
+/// Equivalent to Python's `slice`.
+typedef _Slice = (int start, int stop);
+
+extension _SliceOnList on List {
+  /// Enables using a _Slice to access a sublist, equivalent to `sublist()`.
+  List operator [](_Slice slice) => sublist(slice.$1, slice.$2);
+}
+
+class LocalizedDay {
+  LocalizedDay(this.format);
+
+  final String format;
+
+  DateFormat get _formatter => DateFormat(format);
+
+  List<String Function(String)> get _days => List.generate(7, (int i) {
+    //January 1, 2001, was a Monday.
+    return (String format) => _formatter.format(Date(2001, 1, i + 1));
+  });
+
+  dynamic operator [](Object i) {
+    assert(i is int || i is _Slice);
+
+    // If i is a _Slice, this operator returns a List<String Function(String)>.
+    if (i is _Slice) {
+      final List<String Function(String)> funcs =
+          List<String Function(String)>.from(_SliceOnList(_days)[i]);
+      return funcs.map((String Function(String) f) => f(format)).toList();
+    }
+    // If i is an int, this operator returns a String Function(String).
+    else {
+      final String Function(String) func = _days[i as int];
+      return func(format);
+    }
+  }
+
+  int get length => 7;
+}
+
+class LocalizedMonth {
+  LocalizedMonth(this.format);
+
+  final String format;
+
+  DateFormat get _formatter => DateFormat(format);
+
+  List<String Function(String)> get _months {
+    List<String Function(String)> months = List.generate(12, (int i) {
+      return (String format) => _formatter.format(Date(2001, i + 1, 1));
+    });
+    months.insert(0, (_) => '');
+    return months;
+  }
+
+  dynamic operator [](Object i) {
+    assert(i is int || i is _Slice);
+
+    // If i is a _Slice, this operator returns a List<String Function(String)>.
+    if (i is _Slice) {
+      final List<String Function(String)> funcs =
+          List<String Function(String)>.from(_SliceOnList(_months)[i]);
+      return funcs.map((String Function(String) f) => f(format)).toList();
+    }
+    // If i is an int, this operator returns a String Function(String).
+    else {
+      final String Function(String) func = _months[i as int];
+      return func(format);
+    }
+  }
+
+  int get length => 13;
+}
+
+// Full and abbreviated names of weekdays
+final LocalizedDay dayName = LocalizedDay('EEEE');
+final LocalizedDay dayAbbr = LocalizedDay('E');
+
+// Full and abbreviated names of months (1-based arrays!!!)
+final LocalizedMonth monthName = LocalizedMonth('MMMM');
+final LocalizedMonth monthAbbr = LocalizedMonth('MMM');
+
+/// Return `true` for leap years, `false` for non-leap years.
 bool isLeap(int year) => year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
 
 /// Return weekday (0-6 ~ Mon-Sun) for [year] (0-9999), [month] (1-12), [day] (1-31).
@@ -285,7 +421,7 @@ base class Calendar {
       ),
     );
 
-    return _range(
+    return range(
       0,
       months.length,
       width,
@@ -307,9 +443,9 @@ base class Calendar {
           ),
         );
 
-    return _range(
-      0,
+    return range(
       months.length,
+      0,
       width,
     ).map((int i) => months.sublist(i, i + width)).toList();
   }
@@ -324,7 +460,7 @@ base class Calendar {
       ),
     );
 
-    return _range(
+    return range(
       0,
       months.length,
       width,
@@ -336,58 +472,166 @@ base class Calendar {
 final class TextCalendar extends Calendar {
   TextCalendar();
 
-  // TODO implement method
-  void prweek(int theWeek, int width) {
-    throw UnimplementedError();
+  /// Print a single week (no newline).
+  void prWeek(List<(int, int)> theWeek, int width) {
+    print(formatWeek(theWeek, width));
   }
 
-  // TODO implement method
-  String formatday(int day, int weekday, int width) {
-    throw UnimplementedError();
+  /// Returns a formatted day.
+  String formatDay(int day, int weekday, int width) {
+    final String s;
+    if (day == 0) {
+      s = '';
+    } else {
+      // right-align single-digit days
+      s = day.toString().length == 1 ? ' $day' : '$day';
+    }
+
+    return s.center(width);
   }
 
-  // TODO implement method
-  String formatweek(int theWeek, int width) {
-    throw UnimplementedError();
+  /// Returns a single week in a string (no newline).
+  String formatWeek(List<(int, int)> theWeek, int width) => theWeek
+      .map((final (int d, int wd) dWd) => formatDay(dWd.$1, dWd.$2, width))
+      .toList()
+      .join(' ');
+
+  /// Returns a formatted week day name.
+  String formatWeekday(int day, int width) {
+    final LocalizedDay names = width >= 9 ? dayName : dayAbbr;
+
+    String name = names[day];
+
+    return width > name.length
+        ? name.center(width)
+        : name.substring(0, width).center(width);
   }
 
-  // TODO implement method
-  String formatweekday(int day, int width) {
-    throw UnimplementedError();
-  }
+  /// Return a header for a week.
+  String formatWeekHeader(int width) =>
+      iterWeekDays().map((int i) => formatWeekday(i, width)).toList().join(' ');
 
-  // TODO implement method
-  String formatweekheader(int width) {
-    throw UnimplementedError();
-  }
-
-  // TODO implement method
-  String formatmonthname(
+  /// Return a formatted month name.
+  String formatMonthName(
     int theYear,
     int theMonth,
     int width, [
     bool withYear = true,
   ]) {
-    throw UnimplementedError();
+    _validateMonth(theMonth);
+
+    String s = monthName[theMonth];
+    if (withYear) {
+      s = '$s $theYear';
+    }
+    return s.center(width);
   }
 
-  // TODO implement method
-  void prmonth(int theYear, int theMonth, [int w = 0, int l = 0]) {
-    throw UnimplementedError();
+  /// Print a month's calendar.
+  void prMonth(int theYear, int theMonth, [int w = 0, int l = 0]) =>
+      print(formatMonth(theYear, theMonth, w, l));
+
+  /// Return a month's calendar string (multi-line).
+  String formatMonth(int theYear, int theMonth, [int w = 0, int l = 0]) {
+    w = max(2, w);
+    l = max(1, l);
+    String s = formatMonthName(theYear, theMonth, 7 * (w + 1) - 1);
+    s = s.trimRight();
+    s += '\n' * l;
+    s += formatWeekHeader(w).trimRight();
+    s += '\n' * l;
+
+    for (List<(int, int)> week in monthDays2Calendar(theYear, theMonth)) {
+      s += formatWeek(week, w).trimRight();
+      s += '\n' * l;
+    }
+
+    return s;
   }
 
-  // TODO implement method
-  String formatmonth(int theYear, int theMonth, [int w = 0, int l = 0]) {
-    throw UnimplementedError();
+  /// Returns a year's calendar as a multi-line string.
+  String formatYear(int theYear, [w = 2, l = 1, c = 6, int m = 3]) {
+    w = max(2, w);
+    l = max(1, l);
+    c = max(2, c);
+    final int colWidth = (w + 1) * 7 - 1;
+    final List v = [];
+
+    // Define function as equivalent to Python's `a = v.append`.
+    List a(Object str) {
+      v.add(str);
+      return v;
+    }
+
+    // Python: `a('\n'*l)`.
+    void lNewlines() {
+      a(List<String>.filled(l, '\n').join(''));
+    }
+
+    // Python: `a(repr(theyear).center(colwidth*m+c*(m-1)).rstrip())`.
+    a(
+      theYear
+          .toString()
+          .center((colWidth * m + c * (m - 1)).toInt())
+          .trimRight(),
+    );
+    lNewlines();
+    final String header = formatWeekHeader(w);
+
+    for (final (i, row) in yearDays2Calendar(theYear, m).indexed) {
+      // months in this row
+      final Iterable<int> months = range(min(m * (i + 1) + 1, 13), m * i + 1);
+      lNewlines();
+      final List<String> names = List<String>.from(
+        months.map((k) => formatMonthName(theYear, k, colWidth, false)),
+      );
+      a(formatString(names, colWidth, c).trimRight());
+      lNewlines();
+      final List<String> headers = List<String>.from(
+        months.map((int k) => header),
+      );
+      a(formatString(headers, colWidth, c).trimRight());
+      lNewlines();
+
+      // max number of weeks for this row
+      final int height = List<int>.from(
+        row.map((cal) => cal.length),
+      ).reduce((a, b) => max(a, b));
+      for (int j in range(height)) {
+        List<String> weeks = [];
+        for (var cal in row) {
+          if (j >= cal.length) {
+            weeks.add('');
+          } else {
+            weeks.add(formatWeek(cal[j], w));
+          }
+        }
+        a(formatString(weeks, colWidth, c).trimRight());
+        lNewlines();
+      }
+    }
+
+    return v.join('');
   }
 
-  // TODO implement method
-  String formatyear(int theYear, [w = 2, l = 1, c = 6, int m = 3]) {
-    throw UnimplementedError();
-  }
+  /// Print a year's calendar.
+  void prYear(int theYear, [int w = 0, int l = 0, c = 6, int m = 3]) =>
+      print(formatYear(theYear, w, l, c, m));
+}
 
-  // TODO implement method
-  void pryear(int theYear, [int w = 0, int l = 0, c = 6, int m = 3]) {
-    throw UnimplementedError();
-  }
+const int _colWidth = 7 * 3 - 1; // Amount printed by prweek()
+const int _spacing = 6; // Number of spaces between columns
+
+/// Returns a string formatted from n strings, centered within n columns.
+String formatString(
+  List<String> cols, [
+  int colWidth = _colWidth,
+  int spacing = _spacing,
+]) {
+  // throw UnimplementedError(
+  //   'The formatString() function is not yet implemented.',
+  // );
+
+  final String newSpacing = List.filled(spacing, ' ').join('');
+  return cols.map((String c) => c.center(colWidth)).join(newSpacing);
 }
