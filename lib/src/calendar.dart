@@ -559,11 +559,7 @@ final class TextCalendar extends Calendar {
     final int colWidth = (w + 1) * 7 - 1;
     final List v = [];
 
-    // Define function as equivalent to Python's `a = v.append`.
-    List a(Object str) {
-      v.add(str);
-      return v;
-    }
+    void Function(String) a = v.add;
 
     // Python: `a('\n'*l)`.
     void lNewlines() {
@@ -692,11 +688,7 @@ final class HTMLCalendar extends Calendar {
   String formatMonth(int theYear, int theMonth, {bool withYear = true}) {
     final List<String> v = [];
 
-    // Define function equivalent to Python's `a = v.append`.
-    List a(Object str) {
-      v.add(str);
-      return v;
-    }
+    void Function(String) a = v.add;
 
     a(
       '<table border="0" cellpadding="0" cellspacing="0" class="${HTMLCalendar.cssClassMonth}">',
