@@ -715,10 +715,34 @@ final class HTMLCalendar extends Calendar {
     return v.join('');
   }
 
-  // TODO implement method
   /// Return a formatted year as a table of tables.
   String formatYear(int theYear, [int width = 3]) {
-    throw UnimplementedMethodError(runtimeType.toString(), 'formatYear');
+    final List<String> v = [];
+
+    void Function(String) a = v.add;
+
+    width = max(width, 1);
+    a(
+      '<table border="0" cellpadding="0" cellspacing="0" class="${HTMLCalendar.cssClassYear}">',
+    );
+    a('\n');
+    a(
+      '<tr><th colspan="$width" class="${HTMLCalendar.cssClassYearHead}">$theYear</th></tr>',
+    );
+
+    for (int i in range(Month.january.value + 12, Month.january.value, width)) {
+      // months in this row
+      final Iterable<int> months = range(min(i + width, 13), i);
+      a('<tr>');
+      for (int m in months) {
+        a('<td>');
+        a(formatMonth(theYear, m, withYear: false));
+        a('</td>');
+      }
+      a('</tr>');
+    }
+    a('</table>');
+    return v.join('');
   }
 
   // TODO implement method
