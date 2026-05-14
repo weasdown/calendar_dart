@@ -531,11 +531,9 @@ final class TextCalendar extends Calendar {
     return s.center(width);
   }
 
-  // TODO implement method
   /// Print a month's calendar.
-  void prMonth(int theYear, int theMonth, [int w = 0, int l = 0]) {
-    throw UnimplementedMethodError(runtimeType.toString(), 'prMonth');
-  }
+  void prMonth(int theYear, int theMonth, [int w = 0, int l = 0]) =>
+      print(formatMonth(theYear, theMonth, w, l));
 
   /// Return a month's calendar string (multi-line).
   String formatMonth(int theYear, int theMonth, [int w = 0, int l = 0]) {
