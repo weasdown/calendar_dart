@@ -659,10 +659,12 @@ final class HTMLCalendar extends Calendar {
       ? '<td class="${HTMLCalendar.cssClassNoDay}">&nbsp;</td>' // day outside month
       : '<td class="${cssClasses[weekday]}">$day</td>';
 
-  // TODO implement method
   /// Return a complete week as a table row.
-  String formatWeek(int theWeek) {
-    throw UnimplementedMethodError(runtimeType.toString(), 'formatDay');
+  String formatWeek(Iterable<(int, int)> theWeek) {
+    final String s = List<String>.from(
+      theWeek.map(((int d, int wd) day) => formatDay(day.$1, day.$2)),
+    ).join('');
+    return '<tr>$s</tr>';
   }
 
   // TODO implement method
