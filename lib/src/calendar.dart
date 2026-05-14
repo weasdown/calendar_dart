@@ -12,6 +12,8 @@ import 'package:calendar_dart/date.dart';
 import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
 
+import 'errors.dart';
+
 int _boolToInt(bool a) => a ? 1 : 0;
 
 extension CenterString on String {
@@ -617,6 +619,80 @@ final class TextCalendar extends Calendar {
   /// Print a year's calendar.
   void prYear(int theYear, [int w = 0, int l = 0, c = 6, int m = 3]) =>
       print(formatYear(theYear, w, l, c, m));
+}
+
+/// This calendar returns complete HTML pages.
+final class HTMLCalendar extends Calendar {
+  HTMLCalendar();
+
+  /// CSS classes for the day <td>s
+  static const List<String> cssClasses = [
+    'mon',
+    'tue',
+    'wed',
+    'thu',
+    'fri',
+    'sat',
+    'sun',
+  ];
+
+  /// CSS classes for the day <th>s
+  static const cssClassesWeekdayHead = cssClasses;
+
+  /// CSS class for the days before and after current month
+  static const cssClassNoDay = 'noday';
+
+  /// CSS class for the month's head
+  static const cssClassMonthHead = 'month';
+
+  /// CSS class for the month
+  static const cssClassMonth = 'month';
+
+  /// CSS class for the year's table head
+  static const cssClassYearHead = 'year';
+
+  /// CSS class for the whole year table
+  static const cssClassYear = 'year';
+
+  /// Return a day as a table cell.
+  String formatDay() {
+    throw UnimplementedMethodError(runtimeType.toString(), 'formatDay');
+  }
+
+  /// Return a complete week as a table row.
+  String formatWeek() {
+    throw UnimplementedMethodError(runtimeType.toString(), 'formatDay');
+  }
+
+  /// Return a weekday name as a table header.
+  String formatWeekday() {
+    throw UnimplementedMethodError(runtimeType.toString(), 'formatWeekday');
+  }
+
+  /// Return a header for a week as a table row.
+  String formatWeekHeader() {
+    throw UnimplementedMethodError(runtimeType.toString(), 'formatWeekHeader');
+  }
+
+  /// Return a month name as a table row.
+  String formatMonthName() {
+    throw UnimplementedMethodError(runtimeType.toString(), 'formatMonthName');
+  }
+
+  /// Return a formatted month as a table.
+  String formatMonth() {
+    throw UnimplementedMethodError(runtimeType.toString(), 'formatMonth');
+  }
+
+  /// Return a formatted year as a table of tables.
+  String formatYear() {
+    throw UnimplementedMethodError(runtimeType.toString(), 'formatYear');
+  }
+
+  /// Return a formatted year as a complete HTML page.
+  String formatYearPage() {
+    throw UnimplementedMethodError(runtimeType.toString(), 'formatYearPage');
+  }
 }
 
 const int _colWidth = 7 * 3 - 1; // Amount printed by prweek()
