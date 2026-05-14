@@ -10,6 +10,7 @@ import 'dart:math';
 
 import 'package:calendar_dart/date.dart';
 import 'package:intl/intl.dart';
+import 'package:meta/meta.dart';
 
 import 'errors.dart';
 
@@ -64,7 +65,8 @@ extension CenterString on String {
 }
 
 /// Equivalent of Python's [`range()`](https://docs.python.org/3/library/stdtypes.html#range).
-Iterable<int> _range(int stop, [int start = 0, int step = 1]) sync* {
+@visibleForTesting
+Iterable<int> range(int stop, [int start = 0, int step = 1]) sync* {
   for (int i = start; i < stop; i += step) {
     yield i;
   }
@@ -423,7 +425,7 @@ base class Calendar {
       ),
     );
 
-    return _range(
+    return range(
       0,
       months.length,
       width,
@@ -445,7 +447,7 @@ base class Calendar {
           ),
         );
 
-    return _range(
+    return range(
       0,
       months.length,
       width,
@@ -462,7 +464,7 @@ base class Calendar {
       ),
     );
 
-    return _range(
+    return range(
       0,
       months.length,
       width,
@@ -615,7 +617,7 @@ final class TextCalendar extends Calendar {
 
     for (final (i, row) in yearDays2Calendar(theYear, m).indexed) {
       // months in this row
-      final Iterable<int> months = _range(m * i + 1, min(m * (i + 1) + 1, 13));
+      final Iterable<int> months = range(m * i + 1, min(m * (i + 1) + 1, 13));
       lNewlines();
       final List<String> names = List.generate(months.length, (k) {
         return formatMonthName(theYear, k, colWidth, false);
@@ -632,7 +634,7 @@ final class TextCalendar extends Calendar {
       final int height = List<int>.from(
         row.map((cal) => cal.length),
       ).reduce((a, b) => max(a, b));
-      for (int j in _range(height)) {
+      for (int j in range(height)) {
         List<String> weeks = [];
         for (var cal in row) {
           if (j >= cal.length) {
