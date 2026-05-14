@@ -597,11 +597,14 @@ final class TextCalendar extends Calendar {
     c = max(2, c);
     final int colWidth = (w + 1) * 7 - 1;
     List v = [];
+
+    // Define function as equivalent to Python's `a = v.append`.
     List a(Object str) {
       v.add(str);
       return v;
     }
 
+    // Equivalent to Python's `a('\n'*l)`.
     void lNewlines() {
       a(List<String>.filled(l, '\n').join(''));
     }
