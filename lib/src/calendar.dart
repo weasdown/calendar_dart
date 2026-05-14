@@ -621,7 +621,7 @@ final class TextCalendar extends Calendar {
       final Iterable<int> months = range(min(m * (i + 1) + 1, 13), m * i + 1);
       lNewlines();
       final List<String> names = List.generate(months.length, (k) {
-        return formatMonthName(theYear, k, colWidth, false);
+        return formatMonthName(theYear, k + 1, colWidth, false);
       });
       a(formatString(names, colWidth, c).trimRight());
       lNewlines();
