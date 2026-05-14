@@ -654,11 +654,10 @@ final class HTMLCalendar extends Calendar {
   /// CSS class for the whole year table
   static const cssClassYear = 'year';
 
-  // TODO implement method
   /// Return a day as a table cell.
-  String formatDay() {
-    throw UnimplementedMethodError(runtimeType.toString(), 'formatDay');
-  }
+  String formatDay(int day, int weekday) => (day == 0)
+      ? '<td class="${HTMLCalendar.cssClassNoDay}">&nbsp;</td>' // day outside month
+      : '<td class="${cssClasses[weekday]}">$day</td>';
 
   // TODO implement method
   /// Return a complete week as a table row.
