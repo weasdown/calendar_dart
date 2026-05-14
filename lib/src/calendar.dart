@@ -667,11 +667,9 @@ final class HTMLCalendar extends Calendar {
     return '<tr>$s</tr>';
   }
 
-  // TODO implement method
   /// Return a weekday name as a table header.
-  String formatWeekday(int day) {
-    throw UnimplementedMethodError(runtimeType.toString(), 'formatWeekday');
-  }
+  String formatWeekday(int day) =>
+      '<th class="${cssClassesWeekdayHead[day]}">${dayAbbr[day]}</th>';
 
   // TODO implement method
   /// Return a header for a week as a table row.
