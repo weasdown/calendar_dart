@@ -12,6 +12,8 @@ import 'package:calendar_dart/date.dart';
 import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
 
+import 'errors.dart';
+
 int _boolToInt(bool a) => a ? 1 : 0;
 
 extension CenterString on String {
@@ -651,6 +653,46 @@ final class HTMLCalendar extends Calendar {
 
   /// CSS class for the whole year table
   static const cssClassYear = 'year';
+
+  /// Return a day as a table cell.
+  String formatDay() {
+    throw UnimplementedMethodError(runtimeType.toString(), 'formatDay');
+  }
+
+  /// Return a complete week as a table row.
+  String formatWeek() {
+    throw UnimplementedMethodError(runtimeType.toString(), 'formatDay');
+  }
+
+  /// Return a weekday name as a table header.
+  String formatWeekday() {
+    throw UnimplementedMethodError(runtimeType.toString(), 'formatWeekday');
+  }
+
+  /// Return a header for a week as a table row.
+  String formatWeekHeader() {
+    throw UnimplementedMethodError(runtimeType.toString(), 'formatWeekHeader');
+  }
+
+  /// Return a month name as a table row.
+  String formatMonthName() {
+    throw UnimplementedMethodError(runtimeType.toString(), 'formatMonthName');
+  }
+
+  /// Return a formatted month as a table.
+  String formatMonth() {
+    throw UnimplementedMethodError(runtimeType.toString(), 'formatMonth');
+  }
+
+  /// Return a formatted year as a table of tables.
+  String formatYear() {
+    throw UnimplementedMethodError(runtimeType.toString(), 'formatYear');
+  }
+
+  /// Return a formatted year as a complete HTML page.
+  String formatYearPage() {
+    throw UnimplementedMethodError(runtimeType.toString(), 'formatYearPage');
+  }
 }
 
 const int _colWidth = 7 * 3 - 1; // Amount printed by prweek()
