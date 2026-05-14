@@ -603,16 +603,17 @@ final class TextCalendar extends Calendar {
     }
 
     void lNewlines() {
-      a(
-        theYear
-            .toString()
-            .center((colWidth * m + c * (m - 1)).toInt())
-            .trimRight(),
-      );
+      a(List<String>.filled(l, '\n').join(''));
     }
 
+    // `a(repr(theyear).center(colwidth*m+c*(m-1)).rstrip())`
+    a(
+      theYear
+          .toString()
+          .center((colWidth * m + c * (m - 1)).toInt())
+          .trimRight(),
+    );
     lNewlines();
-    a(List<String>.filled(l, '\n'));
     final String header = formatWeekHeader(w);
 
     for (final (i, row) in yearDays2Calendar(theYear, m).indexed) {
