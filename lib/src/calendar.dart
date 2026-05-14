@@ -619,6 +619,11 @@ final class TextCalendar extends Calendar {
       print(formatYear(theYear, w, l, c, m));
 }
 
+/// This calendar returns complete HTML pages.
+final class HTMLCalendar extends Calendar {
+  HTMLCalendar();
+}
+
 const int _colWidth = 7 * 3 - 1; // Amount printed by prweek()
 const int _spacing = 6; // Number of spaces between columns
 
