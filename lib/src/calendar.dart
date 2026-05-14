@@ -448,8 +448,8 @@ base class Calendar {
         );
 
     return range(
-      0,
       months.length,
+      0,
       width,
     ).map((int i) => months.sublist(i, i + width)).toList();
   }
@@ -617,7 +617,7 @@ final class TextCalendar extends Calendar {
 
     for (final (i, row) in yearDays2Calendar(theYear, m).indexed) {
       // months in this row
-      final Iterable<int> months = range(m * i + 1, min(m * (i + 1) + 1, 13));
+      final Iterable<int> months = range(min(m * (i + 1) + 1, 13), m * i + 1);
       lNewlines();
       final List<String> names = List.generate(months.length, (k) {
         return formatMonthName(theYear, k, colWidth, false);
