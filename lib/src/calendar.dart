@@ -689,8 +689,8 @@ final class HTMLCalendar extends Calendar {
   }
 
   /// Return a formatted month as a table.
-  String formatMonth(int theYear, int theMonth, [bool withYear = true]) {
-    final List v = [];
+  String formatMonth(int theYear, int theMonth, {bool withYear = true}) {
+    final List<String> v = [];
 
     // Define function equivalent to Python's `a = v.append`.
     List a(Object str) {
