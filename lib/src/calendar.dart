@@ -215,7 +215,7 @@ final LocalizedDay dayAbbr = LocalizedDay('E');
 final LocalizedMonth monthName = LocalizedMonth('MMMM');
 final LocalizedMonth monthAbbr = LocalizedMonth('MMM');
 
-/// Return [True] for leap years, [False] for non-leap years.
+/// Return `true` for leap years, `false` for non-leap years.
 bool isLeap(int year) => year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
 
 /// Return weekday (0-6 ~ Mon-Sun) for [year] (0-9999), [month] (1-12), [day] (1-31).
