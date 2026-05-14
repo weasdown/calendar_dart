@@ -561,7 +561,7 @@ final class TextCalendar extends Calendar {
     l = max(1, l);
     c = max(2, c);
     final int colWidth = (w + 1) * 7 - 1;
-    List v = [];
+    final List v = [];
 
     // Define function as equivalent to Python's `a = v.append`.
     List a(Object str) {
@@ -588,9 +588,9 @@ final class TextCalendar extends Calendar {
       // months in this row
       final Iterable<int> months = range(min(m * (i + 1) + 1, 13), m * i + 1);
       lNewlines();
-      final List<String> names = List.generate(months.length, (k) {
-        return formatMonthName(theYear, k + 1, colWidth, false);
-      });
+      final List<String> names = List<String>.from(
+        months.map((k) => formatMonthName(theYear, k, colWidth, false)),
+      );
       a(formatString(names, colWidth, c).trimRight());
       lNewlines();
       final List<String> headers = List<String>.from(
