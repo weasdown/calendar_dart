@@ -13,8 +13,6 @@ import 'package:calendar_dart/date.dart';
 import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
 
-import 'errors.dart';
-
 int _boolToInt(bool a) => a ? 1 : 0;
 
 extension CenterString on String {
@@ -738,16 +736,18 @@ final class HTMLCalendar extends Calendar {
     return v.join('');
   }
 
-  // TODO implement method
   /// Return a formatted year as a complete HTML page.
-  String formatYearPage(
+  List<int> formatYearPage(
     int theYear, [
     int width = 3,
     String? css = 'calendar.css',
     String? encoding,
   ]) {
     // TODO implement getting of default encoding from system, rather than assuming UTF-8.
-    encoding = encoding ?? 'utf-8';
+    /// Python:
+    ///   if encoding is None:
+    ///     encoding = sys.getdefaultencoding()
+    encoding = encoding ?? 'utf-8'; // If no encoding specified, use UTF-8.
     final List<String> v = [];
     void Function(String) a = v.add;
     a('<?xml version="1.0" encoding="$encoding"?>\n');
@@ -769,7 +769,7 @@ final class HTMLCalendar extends Calendar {
     a('</body>\n');
     a('</html>\n');
 
-    Converter<String, List<int>> encoder;
+    final Converter<String, List<int>> encoder;
     if (encoding == 'utf-8') {
       encoder = utf8.encoder;
     } else {
@@ -778,10 +778,12 @@ final class HTMLCalendar extends Calendar {
       );
     }
 
-    throw UnimplementedMethodError(runtimeType.toString(), 'formatYearPage');
-
-    // return encoder.convert(input);
-    // return v.join('').encode(encoding, "xmlcharrefreplace");
+    /// Python: `return ''.join(v).encode(encoding, "xmlcharrefreplace")`.
+    /// "xmlcharrefreplace" argument means the encoder will replace each character with its XML equivalent.
+    /// See also https://www.w3schools.com/python/ref_string_encode.asp.
+    final String toEncode = v.join('');
+    final List<int> encoded = encoder.convert(toEncode);
+    return encoded;
   }
 }
 
