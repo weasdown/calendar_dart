@@ -1,14 +1,11 @@
 import 'package:calendar_dart/calendar.dart';
 
 void main() {
-  Calendar cal = Calendar();
-  print('cal.firstWeekDay: ${cal.firstWeekDay}');
+  final DateTime today = DateTime.now();
+  final int year = today.year;
+  final int month = today.month;
 
-  int newFirstWeekDay = 6;
-  print('Setting cal\'s firstWeekDay to $newFirstWeekDay');
-  cal.setFirstWeekDay = newFirstWeekDay;
+  final TextCalendar tCal = TextCalendar();
 
-  print('\niterWeekDays: ${cal.iterWeekDays()}');
-  cal.firstWeekDay = 6;
-  print(cal.iterWeekDays());
+  tCal.prMonth(year, month);
 }
