@@ -6,13 +6,12 @@
 /// set the first day of the week (0=Monday, 6=Sunday).
 library;
 
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:calendar_dart/date.dart';
 import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
-
-import 'errors.dart';
 
 int _boolToInt(bool a) => a ? 1 : 0;
 
@@ -559,11 +558,7 @@ final class TextCalendar extends Calendar {
     final int colWidth = (w + 1) * 7 - 1;
     final List v = [];
 
-    // Define function as equivalent to Python's `a = v.append`.
-    List a(Object str) {
-      v.add(str);
-      return v;
-    }
+    void Function(String) a = v.add;
 
     // Python: `a('\n'*l)`.
     void lNewlines() {
@@ -655,43 +650,141 @@ final class HTMLCalendar extends Calendar {
   static const cssClassYear = 'year';
 
   /// Return a day as a table cell.
-  String formatDay() {
-    throw UnimplementedMethodError(runtimeType.toString(), 'formatDay');
-  }
+  String formatDay(int day, int weekday) => (day == 0)
+      ? '<td class="${HTMLCalendar.cssClassNoDay}">&nbsp;</td>' // day outside month
+      : '<td class="${cssClasses[weekday]}">$day</td>';
 
   /// Return a complete week as a table row.
-  String formatWeek() {
-    throw UnimplementedMethodError(runtimeType.toString(), 'formatDay');
+  String formatWeek(Iterable<(int, int)> theWeek) {
+    final String s = List<String>.from(
+      theWeek.map(((int d, int wd) day) => formatDay(day.$1, day.$2)),
+    ).join('');
+    return '<tr>$s</tr>';
   }
 
   /// Return a weekday name as a table header.
-  String formatWeekday() {
-    throw UnimplementedMethodError(runtimeType.toString(), 'formatWeekday');
-  }
+  String formatWeekday(int day) =>
+      '<th class="${cssClassesWeekdayHead[day]}">${dayAbbr[day]}</th>';
 
   /// Return a header for a week as a table row.
   String formatWeekHeader() {
-    throw UnimplementedMethodError(runtimeType.toString(), 'formatWeekHeader');
+    final String s = List<String>.from(
+      iterWeekDays().map((int i) => formatWeekday(i)),
+    ).join('');
+    return '<tr>$s</tr>';
   }
 
   /// Return a month name as a table row.
-  String formatMonthName() {
-    throw UnimplementedMethodError(runtimeType.toString(), 'formatMonthName');
+  String formatMonthName(int theYear, int theMonth, [bool withYear = true]) {
+    _validateMonth(theMonth);
+    String s = withYear
+        ? '${monthName[theMonth]} $theYear'
+        : monthName[theMonth];
+    return '<tr><th colspan="7" class="${HTMLCalendar.cssClassMonthHead}">$s</th></tr>';
   }
 
   /// Return a formatted month as a table.
-  String formatMonth() {
-    throw UnimplementedMethodError(runtimeType.toString(), 'formatMonth');
+  String formatMonth(int theYear, int theMonth, {bool withYear = true}) {
+    final List<String> v = [];
+
+    void Function(String) a = v.add;
+
+    a(
+      '<table border="0" cellpadding="0" cellspacing="0" class="${HTMLCalendar.cssClassMonth}">',
+    );
+    a('\n');
+    a(formatMonthName(theYear, theMonth, withYear = withYear));
+    a('\n');
+    a(formatWeekHeader());
+    a('\n');
+    for (List<(int, int)> week in monthDays2Calendar(theYear, theMonth)) {
+      a(formatWeek(week));
+      a('\n');
+    }
+    a('</table>');
+    a('\n');
+    return v.join('');
   }
 
   /// Return a formatted year as a table of tables.
-  String formatYear() {
-    throw UnimplementedMethodError(runtimeType.toString(), 'formatYear');
+  String formatYear(int theYear, [int width = 3]) {
+    final List<String> v = [];
+
+    void Function(String) a = v.add;
+
+    width = max(width, 1);
+    a(
+      '<table border="0" cellpadding="0" cellspacing="0" class="${HTMLCalendar.cssClassYear}">',
+    );
+    a('\n');
+    a(
+      '<tr><th colspan="$width" class="${HTMLCalendar.cssClassYearHead}">$theYear</th></tr>',
+    );
+
+    for (int i in range(Month.january.value + 12, Month.january.value, width)) {
+      // months in this row
+      final Iterable<int> months = range(min(i + width, 13), i);
+      a('<tr>');
+      for (int m in months) {
+        a('<td>');
+        a(formatMonth(theYear, m, withYear: false));
+        a('</td>');
+      }
+      a('</tr>');
+    }
+    a('</table>');
+    return v.join('');
   }
 
   /// Return a formatted year as a complete HTML page.
-  String formatYearPage() {
-    throw UnimplementedMethodError(runtimeType.toString(), 'formatYearPage');
+  List<int> formatYearPage(
+    int theYear, [
+    int width = 3,
+    String? css = 'calendar.css',
+    String? encoding,
+  ]) {
+    // TODO implement getting of default encoding from system, rather than assuming UTF-8.
+    /// Python:
+    ///   if encoding is None:
+    ///     encoding = sys.getdefaultencoding()
+    encoding = encoding ?? 'utf-8'; // If no encoding specified, use UTF-8.
+    final List<String> v = [];
+    void Function(String) a = v.add;
+    a('<?xml version="1.0" encoding="$encoding"?>\n');
+    a(
+      '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">\n',
+    );
+    a('<html>\n');
+    a('<head>\n');
+    a(
+      '<meta http-equiv="Content-Type" content="text/html; charset=$encoding" />\n',
+    );
+    if (css != null) {
+      a('<link rel="stylesheet" type="text/css" href="$css" />\n');
+    }
+    a('<title>Calendar for $theYear</title>\n');
+    a('</head>\n');
+    a('<body>\n');
+    a(formatYear(theYear, width));
+    a('</body>\n');
+    a('</html>\n');
+
+    final Converter<String, List<int>> encoder;
+    if (encoding == 'utf-8') {
+      encoder = utf8.encoder;
+    } else {
+      throw UnimplementedError(
+        'Only encoding using UTF-8 is supported, but "$encoding" was specified.',
+      );
+    }
+
+    /// Python: `return ''.join(v).encode(encoding, "xmlcharrefreplace")`.
+    /// "xmlcharrefreplace" argument means the encoder will replace each character with its XML equivalent.
+    /// See also https://www.w3schools.com/python/ref_string_encode.asp.
+    final String toEncode = v.join('');
+    // TODO add equivalent of Python's "xmlcharrefreplace" argument for XML character replacement.
+    final List<int> encoded = encoder.convert(toEncode);
+    return encoded;
   }
 }
 
