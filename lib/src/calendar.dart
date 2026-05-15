@@ -782,6 +782,7 @@ final class HTMLCalendar extends Calendar {
     /// "xmlcharrefreplace" argument means the encoder will replace each character with its XML equivalent.
     /// See also https://www.w3schools.com/python/ref_string_encode.asp.
     final String toEncode = v.join('');
+    // TODO add equivalent of Python's "xmlcharrefreplace" argument for XML character replacement.
     final List<int> encoded = encoder.convert(toEncode);
     return encoded;
   }
